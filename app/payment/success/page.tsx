@@ -1,11 +1,10 @@
-// app/payment/success/page.tsx
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { supabase } from '../../../lib/supabase'
 
-export default function PaymentSuccess() {
+function PaymentSuccessContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [status, setStatus] = useState('Processing your payment...')
@@ -106,5 +105,13 @@ export default function PaymentSuccess() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function PaymentSuccess() {
+  return (
+    <Suspense fallback={<div style={{minHeight: '100vh', background: '#000000', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Loading...</div>}>
+      <PaymentSuccessContent />
+    </Suspense>
   )
 }
