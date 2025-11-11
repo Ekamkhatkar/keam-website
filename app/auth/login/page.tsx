@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import AuthButton from '@/components/shared/AuthButton'
+import AuthButton from '../../../components/shared/AuthButton'
 
 export default function Login() {
   const [email, setEmail] = useState('')
