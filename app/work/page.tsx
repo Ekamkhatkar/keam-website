@@ -22,7 +22,7 @@ export default function Work() {
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null)
 
   // Type the filteredItems
-  const filteredItems: WorkItem[] = selectedCategory === 'All' 
+  const filteredItems = selectedCategory === 'All' 
     ? workItems 
     : workItems.filter((item: WorkItem) => item.category === selectedCategory)
 
