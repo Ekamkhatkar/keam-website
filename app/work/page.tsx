@@ -22,9 +22,7 @@ export default function Work() {
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null)
 
   // Type the filteredItems
-  const filteredItems = selectedCategory === 'All' 
-    ? workItems 
-    : workItems.filter((item: WorkItem) => item.category === selectedCategory)
+  const filteredItems = workItems
 
   return (
     <div>
@@ -142,11 +140,11 @@ export default function Work() {
           
           {/* Work Grid */}
           <div className="work-grid">
-            {filteredItems.map((item: WorkItem) => (
+            {filteredItems.map((item) => (
               <div 
                 key={item.id} 
                 className="glow-card"
-                onClick={() => setSelectedWork(item)}
+                onClick={() => console.log('Item clicked:', item)}
                 style={{cursor: 'pointer'}}
               >
                 <div className="work-image" style={{
