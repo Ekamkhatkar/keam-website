@@ -201,22 +201,36 @@ useEffect(() => {
 
   // Admin functions
   async function updateOrderStatus(newStatus: string) {
-    setUpdatingStatus(true)
-    try {
-      const { error } = await supabase
-        .from('keam_visuals')
-        .update({ status: newStatus })
-        .eq('id', orderId)
+  console.log('🔄 Updating status, current user:', user)
+  console.log('🔄 User ID:', user?.id)
+  
+  // Check actual auth state
+  const { data: authData } = await supabase.auth.getUser()
+  console.log('🔄 Auth user:', authData.user)
+  console.log('🔄 Auth user ID:', authData.user?.id)
+  
+  setUpdatingStatus(true)
+  try {
+    const { error, data } = await supabase
+      .from('keam_visuals')
+      .update({ status: newStatus })
+      .eq('id', orderId)
+      .select()
 
-      if (error) throw error
+    console.log('🔄 Update result:', { error, data })
+    
+    if (error) {
+      console.error('🔄 Update error details:', error)
+      throw error
+    }
 
-      setOrder((prev: any) => ({ ...prev, status: newStatus }))
-      alert(`✅ Order status updated to ${newStatus}`)
-    } catch (error) {
-      console.error('Error updating status:', error)
-      alert('❌ Failed to update status')
-    } finally {
-      setUpdatingStatus(false)
+    setOrder((prev: any) => ({ ...prev, status: newStatus }))
+    alert(`✅ Order status updated to ${newStatus}`)
+  } catch (error) {
+    console.error('Error updating status:', error)
+    alert('❌ Failed to update status')
+  } finally {
+    setUpdatingStatus(false)
     }
   }
 
