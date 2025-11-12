@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Keam Visuals - Professional Design Services',
   description: '2 years of design experience. Twitch, YouTube, and custom graphics.',
-  themeColor: '#000000', // ← Add this for theme color
+  themeColor: '#000000',
   openGraph: {
     title: 'Keam Visuals - Professional Design Services',
     description: '2 years of design experience. Twitch, YouTube, and custom graphics.',
@@ -31,7 +31,6 @@ export const metadata: Metadata = {
     description: '2 years of design experience. Twitch, YouTube, and custom graphics.',
     images: ['https://i.imgur.com/FDBOf9y.png'],
   },
-  // Optional: Also add these for broader browser support
   other: {
     'msapplication-TileColor': '#000000',
   },
