@@ -201,13 +201,13 @@ useEffect(() => {
 
   // Admin functions
   async function updateOrderStatus(newStatus: string) {
-  console.log('🔄 Updating status, current user:', user)
-  console.log('🔄 User ID:', user?.id)
+  console.log('🔄 Updating status to:', newStatus)
   
-  // Check actual auth state
-  const { data: authData } = await supabase.auth.getUser()
-  console.log('🔄 Auth user:', authData.user)
-  console.log('🔄 Auth user ID:', authData.user?.id)
+  // Debug: Check current auth state
+  const { data: { user } } = await supabase.auth.getUser()
+  console.log('🔐 Current auth user:', user)
+  console.log('🔐 User email:', user?.email)
+  console.log('🔐 User ID:', user?.id)
   
   setUpdatingStatus(true)
   try {
@@ -221,6 +221,9 @@ useEffect(() => {
     
     if (error) {
       console.error('🔄 Update error details:', error)
+      console.error('🔄 Error code:', error.code)
+      console.error('🔄 Error message:', error.message)
+      console.error('🔄 Error details:', error.details)
       throw error
     }
 
@@ -231,8 +234,8 @@ useEffect(() => {
     alert('❌ Failed to update status')
   } finally {
     setUpdatingStatus(false)
-    }
   }
+}
 
   async function updatePaymentStatus(newPaymentStatus: string) {
     setUpdatingStatus(true)
