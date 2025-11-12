@@ -49,7 +49,7 @@ export default function Login() {
           <h1 style={{
             fontSize: '2rem',
             fontWeight: 'bold',
-            background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)',
+            background: 'linear-gradient(135deg, #c4c4c4ff, #414141ff)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             textAlign: 'center',
@@ -131,7 +131,7 @@ export default function Login() {
               disabled={loading}
               style={{
                 width: '100%',
-                background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)',
+                background: 'linear-gradient(135deg, #bbbbbbff, #3b3b3bff)',
                 color: 'white',
                 padding: '1rem 2rem',
                 border: 'none',
@@ -146,6 +146,17 @@ export default function Login() {
             </button>
           </form>
 
+          {/* Social Login Buttons */}
+          <div style={{marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)'}}>
+            <div style={{textAlign: 'center', color: '#9ca3af', marginBottom: '1rem'}}>
+              Or continue with
+            </div>
+            <div style={{display: 'flex', gap: '1rem', justifyContent: 'center'}}>
+              <AuthButton />
+            </div>
+          </div>
+
+          {/* Sign Up Link */}
           <div style={{marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)'}}>
             <p style={{color: '#9ca3af', fontSize: '0.9rem', textAlign: 'center'}}>
               Don't have an account? <a href="/signup" style={{color: '#8b5cf6', textDecoration: 'none'}}>Sign up</a>
