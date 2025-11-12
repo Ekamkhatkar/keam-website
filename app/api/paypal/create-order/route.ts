@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
         brand_name: 'KeamVisuals',
         landing_page: 'BILLING',
         user_action: 'PAY_NOW',
-        return_url: `${process.env.NEXTAUTH_URL}/dashboard/orders/${orderId}`,
+        return_url: `${process.env.NEXTAUTH_URL}/payment/success?order_id=${orderId}`,
         cancel_url: `${process.env.NEXTAUTH_URL}/payment/cancel`,
       },
     });
