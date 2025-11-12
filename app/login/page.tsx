@@ -38,35 +38,95 @@ export default function Login() {
   }
 
   return (
-    <div style={{minHeight: '100vh', background: '#000000', color: 'white', paddingTop: '80px'}}>
-      <div style={{maxWidth: '400px', margin: '0 auto', padding: '2rem 1rem'}}>
+    <div style={{
+      minHeight: '100vh', 
+      background: 'linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%)',
+      color: 'white', 
+      paddingTop: '80px',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Animated background elements */}
+      <div style={{
+        position: 'absolute',
+        top: '10%',
+        left: '10%',
+        width: '300px',
+        height: '300px',
+        background: 'radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 70%)',
+        borderRadius: '50%',
+        animation: 'float 6s ease-in-out infinite'
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        right: '10%',
+        width: '200px',
+        height: '200px',
+        background: 'radial-gradient(circle, rgba(185, 28, 28, 0.08) 0%, transparent 70%)',
+        borderRadius: '50%',
+        animation: 'float 8s ease-in-out infinite reverse'
+      }} />
+      
+      <div style={{
+        maxWidth: '440px', 
+        margin: '0 auto', 
+        padding: '2rem 1rem',
+        position: 'relative',
+        zIndex: 10
+      }}>
         <div style={{
-          background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '16px',
-          padding: '2rem'
+          background: 'rgba(0, 0, 0, 0.8)',
+          border: '1px solid rgba(239, 68, 68, 0.3)',
+          borderRadius: '20px',
+          padding: '3rem 2.5rem',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 20px 40px rgba(239, 68, 68, 0.1), 0 0 80px rgba(185, 28, 28, 0.05)',
+          position: 'relative',
+          overflow: 'hidden'
         }}>
+          {/* Accent glow */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '2px',
+            background: 'linear-gradient(90deg, transparent, #ef4444, transparent)'
+          }} />
+          
           <h1 style={{
-            fontSize: '2rem',
+            fontSize: '2.5rem',
             fontWeight: 'bold',
-            background: 'linear-gradient(135deg, #c4c4c4ff, #414141ff)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             textAlign: 'center',
-            marginBottom: '2rem'
+            marginBottom: '0.5rem',
+            textShadow: '0 0 30px rgba(239, 68, 68, 0.3)'
           }}>
-            Sign In
+            Welcome Back
           </h1>
           
-          <form onSubmit={handleLogin} style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
+          <p style={{
+            color: '#9ca3af',
+            textAlign: 'center',
+            marginBottom: '2.5rem',
+            fontSize: '1.1rem'
+          }}>
+            Sign in to your account
+          </p>
+          
+          <form onSubmit={handleLogin} style={{display: 'flex', flexDirection: 'column', gap: '2rem'}}>
             <div>
               <label style={{
                 display: 'block',
                 color: 'white',
-                marginBottom: '0.5rem',
-                fontWeight: '600'
+                marginBottom: '0.75rem',
+                fontWeight: '600',
+                fontSize: '1rem'
               }}>
-                Email
+                Email Address
               </label>
               <input
                 type="email"
@@ -75,14 +135,26 @@ export default function Login() {
                 required
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  borderRadius: '8px',
+                  padding: '1rem 1.25rem',
+                  background: 'rgba(239, 68, 68, 0.05)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  borderRadius: '12px',
                   color: 'white',
-                  fontSize: '1rem'
+                  fontSize: '1rem',
+                  transition: 'all 0.3s ease',
+                  outline: 'none'
                 }}
                 placeholder="your@email.com"
+                onFocus={(e) => {
+                  e.target.style.background = 'rgba(239, 68, 68, 0.1)'
+                  e.target.style.borderColor = 'rgba(239, 68, 68, 0.5)'
+                  e.target.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)'
+                }}
+                onBlur={(e) => {
+                  e.target.style.background = 'rgba(239, 68, 68, 0.05)'
+                  e.target.style.borderColor = 'rgba(239, 68, 68, 0.3)'
+                  e.target.style.boxShadow = 'none'
+                }}
               />
             </div>
 
@@ -90,8 +162,9 @@ export default function Login() {
               <label style={{
                 display: 'block',
                 color: 'white',
-                marginBottom: '0.5rem',
-                fontWeight: '600'
+                marginBottom: '0.75rem',
+                fontWeight: '600',
+                fontSize: '1rem'
               }}>
                 Password
               </label>
@@ -102,14 +175,26 @@ export default function Login() {
                 required
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  borderRadius: '8px',
+                  padding: '1rem 1.25rem',
+                  background: 'rgba(239, 68, 68, 0.05)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  borderRadius: '12px',
                   color: 'white',
-                  fontSize: '1rem'
+                  fontSize: '1rem',
+                  transition: 'all 0.3s ease',
+                  outline: 'none'
                 }}
                 placeholder="••••••••"
+                onFocus={(e) => {
+                  e.target.style.background = 'rgba(239, 68, 68, 0.1)'
+                  e.target.style.borderColor = 'rgba(239, 68, 68, 0.5)'
+                  e.target.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)'
+                }}
+                onBlur={(e) => {
+                  e.target.style.background = 'rgba(239, 68, 68, 0.05)'
+                  e.target.style.borderColor = 'rgba(239, 68, 68, 0.3)'
+                  e.target.style.boxShadow = 'none'
+                }}
               />
             </div>
 
@@ -117,12 +202,15 @@ export default function Login() {
               <div style={{
                 background: 'rgba(239, 68, 68, 0.1)',
                 border: '1px solid rgba(239, 68, 68, 0.3)',
-                borderRadius: '8px',
-                padding: '1rem',
+                borderRadius: '12px',
+                padding: '1.25rem',
                 color: '#ef4444',
-                textAlign: 'center'
+                textAlign: 'center',
+                fontSize: '1rem',
+                fontWeight: '500',
+                backdropFilter: 'blur(10px)'
               }}>
-                {error}
+                ⚠️ {error}
               </div>
             )}
 
@@ -131,39 +219,131 @@ export default function Login() {
               disabled={loading}
               style={{
                 width: '100%',
-                background: 'linear-gradient(135deg, #bbbbbbff, #3b3b3bff)',
+                background: loading 
+                  ? 'rgba(239, 68, 68, 0.4)' 
+                  : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
                 color: 'white',
-                padding: '1rem 2rem',
+                padding: '1.25rem 2rem',
                 border: 'none',
-                borderRadius: '12px',
+                borderRadius: '14px',
                 fontSize: '1.1rem',
-                fontWeight: '600',
+                fontWeight: '700',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                opacity: loading ? 0.7 : 1
+                opacity: loading ? 0.7 : 1,
+                transition: 'all 0.3s ease',
+                boxShadow: loading 
+                  ? 'none' 
+                  : '0 8px 25px rgba(239, 68, 68, 0.3), 0 0 0 1px rgba(239, 68, 68, 0.2)',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+              onMouseOver={(e) => {
+                if (!loading) {
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  e.currentTarget.style.boxShadow = '0 12px 30px rgba(239, 68, 68, 0.4), 0 0 0 1px rgba(239, 68, 68, 0.3)'
+                }
+              }}
+              onMouseOut={(e) => {
+                if (!loading) {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.3), 0 0 0 1px rgba(239, 68, 68, 0.2)'
+                }
               }}
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? (
+                <>
+                  <span style={{opacity: 0}}>Sign In</span>
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '20px',
+                    height: '20px',
+                    border: '2px solid transparent',
+                    borderTop: '2px solid white',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite'
+                  }} />
+                </>
+              ) : (
+                'Sign In'
+              )}
             </button>
           </form>
 
           {/* Social Login Buttons */}
-          <div style={{marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)'}}>
-            <div style={{textAlign: 'center', color: '#9ca3af', marginBottom: '1rem'}}>
-              Or continue with
-            </div>
-            <div style={{display: 'flex', gap: '1rem', justifyContent: 'center'}}>
-              <AuthButton />
-            </div>
-          </div>
+<div style={{
+  marginTop: '2.5rem', 
+  paddingTop: '2.5rem', 
+  borderTop: '1px solid rgba(239, 68, 68, 0.2)'
+}}>
+  <div style={{
+    textAlign: 'center', 
+    color: '#9ca3af', 
+    marginBottom: '1.5rem',
+    fontSize: '1rem'
+  }}>
+    Or continue with
+  </div>
+  <div style={{
+    display: 'flex', 
+    gap: '1.5rem', // ← Increase gap from 1rem to 1.5rem
+    justifyContent: 'center',
+    flexDirection: 'column', // ← Stack vertically instead of side-by-side
+    alignItems: 'center',
+    maxWidth: '300px',
+    margin: '0 auto'
+  }}>
+    <AuthButton />
+  </div>
+</div>
 
           {/* Sign Up Link */}
-          <div style={{marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)'}}>
-            <p style={{color: '#9ca3af', fontSize: '0.9rem', textAlign: 'center'}}>
-              Don't have an account? <a href="/signup" style={{color: '#8b5cf6', textDecoration: 'none'}}>Sign up</a>
+          <div style={{
+            marginTop: '2.5rem', 
+            paddingTop: '2rem', 
+            borderTop: '1px solid rgba(239, 68, 68, 0.2)'
+          }}>
+            <p style={{
+              color: '#9ca3af', 
+              fontSize: '1rem', 
+              textAlign: 'center'
+            }}>
+              Don't have an account?{' '}
+              <a 
+                href="/signup" 
+                style={{
+                  color: '#ef4444', 
+                  textDecoration: 'none',
+                  fontWeight: '600',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.textShadow = '0 0 10px rgba(239, 68, 68, 0.5)'
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.textShadow = 'none'
+                }}
+              >
+                Create account
+              </a>
             </p>
           </div>
         </div>
       </div>
+
+      {/* Add CSS animations */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        @keyframes spin {
+          0% { transform: translate(-50%, -50%) rotate(0deg); }
+          100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+      `}</style>
     </div>
   )
 }
