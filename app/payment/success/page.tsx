@@ -43,7 +43,7 @@ function PaymentSuccessContent() {
       
       // Redirect to chat after 2 seconds
       setTimeout(() => {
-        router.push(`/chat/${orderId}`)
+        router.push(`/dashboard/orders/${orderId}`)
       }, 2000)
 
     } catch (error) {
