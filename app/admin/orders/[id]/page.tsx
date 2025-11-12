@@ -62,13 +62,22 @@ export default function AdminOrderDetail() {
       console.log('Old data:', payload.old)
       
       if (payload.eventType === 'INSERT') {
-        console.log('🆕 INSERT event - adding to messages')
-        setMessages(prev => {
-          const newMessages = [...prev, payload.new]
-          console.log('Messages count:', newMessages.length)
-          return newMessages
-        })
-      }
+  console.log('🆕 INSERT event - adding to messages')
+  setMessages(prev => {
+    // Check if message already exists to prevent duplicates
+    const messageExists = prev.some(msg => 
+      msg.id === payload.new.id || 
+      (msg.id.startsWith('temp-') && msg.content === payload.new.content)
+    )
+    if (messageExists) {
+      console.log('🚫 Duplicate message detected, skipping')
+      return prev
+    }
+    const newMessages = [...prev, payload.new]
+    console.log('Messages count:', newMessages.length)
+    return newMessages
+  })
+}
     }
   )
   .subscribe((status) => {
