@@ -15,18 +15,18 @@ export default function Home() {
       color: '#000000',
       minHeight: '100vh',
       fontFamily: 'system-ui, -apple-system, sans-serif',
-      lineHeight: '1.6'
+      lineHeight: '1.5'
     }}>
-      {/* Header */}
+      {/* Minimal Header */}
       <header style={{
         position: 'fixed',
         top: 0,
         width: '100%',
-        background: 'rgba(255, 255, 255, 0.9)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
-        padding: '1.5rem 0',
-        zIndex: 1000
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        padding: '2rem 0',
+        zIndex: 1000,
+        borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -37,8 +37,8 @@ export default function Home() {
           alignItems: 'center'
         }}>
           <div style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
+            fontSize: '1.25rem',
+            fontWeight: '600',
             color: '#000000'
           }}>
             KeamVisuals
@@ -49,31 +49,36 @@ export default function Home() {
             gap: '3rem',
             alignItems: 'center'
           }}>
+            <a href="/services" style={{
+              color: '#000000',
+              textDecoration: 'none',
+              fontSize: '0.95rem',
+              fontWeight: '400'
+            }}>
+              Services
+            </a>
             <a href="/work" style={{
               color: '#000000',
               textDecoration: 'none',
-              fontSize: '1rem',
-              fontWeight: '500',
-              transition: 'opacity 0.3s ease'
-            }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
-              Work
+              fontSize: '0.95rem',
+              fontWeight: '400'
+            }}>
+              Projects
             </a>
-            <a href="/prices" style={{
+            <a href="/testimonials" style={{
               color: '#000000',
               textDecoration: 'none',
-              fontSize: '1rem',
-              fontWeight: '500',
-              transition: 'opacity 0.3s ease'
-            }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
-              Prices
+              fontSize: '0.95rem',
+              fontWeight: '400'
+            }}>
+              Testimonials
             </a>
             <a href="/contact" style={{
               color: '#000000',
               textDecoration: 'none',
-              fontSize: '1rem',
-              fontWeight: '500',
-              transition: 'opacity 0.3s ease'
-            }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
+              fontSize: '0.95rem',
+              fontWeight: '400'
+            }}>
               Contact
             </a>
             
@@ -82,12 +87,11 @@ export default function Home() {
                 background: '#000000',
                 color: '#ffffff',
                 padding: '0.75rem 1.5rem',
-                borderRadius: '8px',
+                borderRadius: '25px',
                 textDecoration: 'none',
                 fontSize: '0.9rem',
-                fontWeight: '500',
-                transition: 'all 0.3s ease'
-              }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
+                fontWeight: '500'
+              }}>
                 Get Started
               </a>
             ) : (
@@ -97,30 +101,14 @@ export default function Home() {
                   style={{
                     background: '#000000',
                     border: 'none',
-                    borderRadius: '8px',
-                    padding: '0.75rem 1rem',
+                    borderRadius: '25px',
+                    padding: '0.75rem 1.5rem',
                     color: 'white',
                     cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
                     fontSize: '0.9rem',
                     fontWeight: '500'
                   }}
                 >
-                  <div style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '50%',
-                    background: '#333333',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 'bold',
-                    fontSize: '12px'
-                  }}>
-                    {user.email?.charAt(0).toUpperCase()}
-                  </div>
                   Account
                 </button>
 
@@ -129,7 +117,7 @@ export default function Home() {
                     position: 'absolute',
                     top: '100%',
                     right: 0,
-                    marginTop: '8px',
+                    marginTop: '0.5rem',
                     background: '#ffffff',
                     border: '1px solid rgba(0,0,0,0.1)',
                     borderRadius: '8px',
@@ -138,9 +126,6 @@ export default function Home() {
                     boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
                     zIndex: 1000
                   }}>
-                    <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
-                      <p style={{ fontWeight: '600', color: '#000000', fontSize: '0.8rem' }}>{user.email}</p>
-                    </div>
                     <a 
                       href="/dashboard" 
                       style={{
@@ -148,12 +133,8 @@ export default function Home() {
                         padding: '0.75rem 1rem',
                         color: '#000000',
                         textDecoration: 'none',
-                        borderRadius: '4px',
-                        fontSize: '0.8rem',
-                        transition: 'background 0.3s ease'
+                        fontSize: '0.8rem'
                       }}
-                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.05)'}
-                      onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
                     >
                       My Orders
                     </a>
@@ -170,12 +151,8 @@ export default function Home() {
                         color: '#000000',
                         textAlign: 'left',
                         cursor: 'pointer',
-                        borderRadius: '4px',
-                        fontSize: '0.8rem',
-                        transition: 'background 0.3s ease'
+                        fontSize: '0.8rem'
                       }}
-                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.05)'}
-                      onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
                     >
                       Sign Out
                     </button>
@@ -187,184 +164,152 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Section - Exact Portfolite Layout */}
       <section style={{
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
         padding: '0 2rem',
-        paddingTop: '80px'
+        paddingTop: '120px',
+        maxWidth: '1200px',
+        margin: '0 auto'
       }}>
-        <div style={{maxWidth: '800px'}}>
-          <h1 style={{
-            fontSize: '4rem',
-            fontWeight: 'bold',
-            marginBottom: '1.5rem',
-            lineHeight: '1.1',
-            color: '#000000'
-          }}>
-            Creating Unique<br />Design Experiences
-          </h1>
-          <p style={{
-            fontSize: '1.25rem',
-            color: '#666666',
-            marginBottom: '3rem',
-            maxWidth: '600px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            lineHeight: '1.6'
-          }}>
-            Professional design solutions for content creators and streamers. 
-            Bringing your vision to life with 2 years of expertise.
-          </p>
-          <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap'}}>
-            <a href="/prices" style={{
-              background: '#000000',
-              color: '#ffffff',
-              padding: '1rem 2rem',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              fontSize: '1rem',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '4rem',
+          alignItems: 'center',
+          width: '100%'
+        }}>
+          {/* Left Column - Text Content */}
+          <div>
+            <h1 style={{
+              fontSize: '3.5rem',
+              fontWeight: 'bold',
+              marginBottom: '1.5rem',
+              lineHeight: '1.1',
+              color: '#000000'
+            }}>
+              Creating Unique<br />Brand Identities
+            </h1>
+            <p style={{
+              fontSize: '1.1rem',
+              color: '#666666',
+              marginBottom: '3rem',
+              lineHeight: '1.6'
+            }}>
+              Branding that you<br />
+              <span style={{fontWeight: '600', color: '#000000'}}>need Indeed</span>
+            </p>
+            <div style={{display: 'flex', gap: '1rem', marginBottom: '4rem'}}>
+              <a href="/prices" style={{
+                background: '#000000',
+                color: '#ffffff',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                textDecoration: 'none',
+                fontSize: '0.95rem',
+                fontWeight: '500',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                Get Started Now
+                <span style={{fontSize: '1.1rem'}}>→</span>
+              </a>
+              <a href="/work" style={{
+                background: 'transparent',
+                color: '#000000',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                textDecoration: 'none',
+                fontSize: '0.95rem',
+                fontWeight: '500',
+                border: '1px solid #000000',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                See Projects
+                <span style={{fontSize: '1.1rem'}}>↗</span>
+              </a>
+            </div>
+            <div style={{
+              color: '#666666',
+              fontSize: '0.9rem',
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem'
-            }} onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)'
-            }} onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = 'none'
             }}>
-              Get Started Now
-              <span style={{fontSize: '1.2rem'}}>→</span>
-            </a>
-            <a href="/work" style={{
-              background: 'transparent',
-              color: '#000000',
-              padding: '1rem 2rem',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              fontSize: '1rem',
-              fontWeight: '600',
-              border: '1px solid #000000',
-              transition: 'all 0.3s ease'
-            }} onMouseOver={(e) => {
-              e.currentTarget.style.background = '#000000'
-              e.currentTarget.style.color = '#ffffff'
-              e.currentTarget.style.transform = 'translateY(-2px)'
-            }} onMouseOut={(e) => {
-              e.currentTarget.style.background = 'transparent'
-              e.currentTarget.style.color = '#000000'
-              e.currentTarget.style.transform = 'translateY(0)'
-            }}>
-              See Projects
-            </a>
+              <span>Scroll down</span>
+              <span style={{fontSize: '1rem'}}>↓</span>
+            </div>
           </div>
+
+          {/* Right Column - Placeholder for graphic */}
           <div style={{
-            marginTop: '4rem',
-            color: '#666666',
-            fontSize: '0.9rem',
+            background: 'linear-gradient(135deg, #f5f5f5, #e5e5e5)',
+            borderRadius: '12px',
+            height: '400px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '0.5rem'
+            color: '#999999',
+            fontSize: '1rem',
+            border: '1px solid rgba(0,0,0,0.1)'
           }}>
-            <span>Scroll down</span>
-            <span style={{fontSize: '1.2rem'}}>↓</span>
+            Brand Visual Showcase
           </div>
         </div>
       </section>
 
-      {/* Featured Work Section */}
+      {/* Projects Grid Section */}
       <section style={{
-        padding: '6rem 0',
+        padding: '6rem 2rem',
         background: '#f8f8f8'
       }}>
-        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
-          <h2 style={{
-            fontSize: '2.5rem',
-            fontWeight: 'bold',
-            marginBottom: '3rem',
-            color: '#000000',
-            textAlign: 'center'
-          }}>
-            Featured Work
-          </h2>
-          
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto'
+        }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem'
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '2rem',
+            marginBottom: '4rem'
           }}>
-            {featuredWork.map((item) => (
-              <div 
-                key={item.id} 
-                style={{
-                  background: '#ffffff',
-                  borderRadius: '12px',
-                  padding: '2rem',
-                  transition: 'all 0.3s ease',
-                  border: '1px solid rgba(0,0,0,0.1)'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)'
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.1)'
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              >
+            {['Asterisk', 'Eooks', 'Opal', 'Dune'].map((project, index) => (
+              <div key={index} style={{
+                background: '#ffffff',
+                borderRadius: '12px',
+                padding: '2rem',
+                textAlign: 'center',
+                border: '1px solid rgba(0,0,0,0.1)'
+              }}>
                 <div style={{
-                  width: '100%',
-                  height: '200px',
-                  background: 'linear-gradient(135deg, #f5f5f5, #e5e5e5)',
-                  borderRadius: '8px',
-                  marginBottom: '1.5rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#666666',
-                  fontSize: '1rem',
+                  fontSize: '1.5rem',
                   fontWeight: '600',
-                  position: 'relative'
-                }}>
-                  {item.title}
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '1rem',
-                    right: '1rem',
-                    background: '#000000',
-                    color: '#ffffff',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '6px',
-                    fontSize: '0.8rem',
-                    fontWeight: '600'
-                  }}>
-                    {item.images.length} designs
-                  </div>
-                </div>
-                <h3 style={{
-                  fontSize: '1.25rem',
-                  fontWeight: '700',
                   marginBottom: '1rem',
                   color: '#000000'
                 }}>
-                  {item.title}
-                </h3>
-                <p style={{
-                  color: '#666666',
-                  fontSize: '0.95rem',
-                  lineHeight: '1.6'
+                  {project}
+                </div>
+                <div style={{
+                  fontSize: '0.9rem',
+                  color: '#666666'
                 }}>
-                  {item.description}
-                </p>
+                  Project description
+                </div>
               </div>
             ))}
+          </div>
+
+          <div style={{
+            textAlign: 'center',
+            color: '#666666',
+            fontSize: '0.9rem'
+          }}>
+            More information is more available throughout this
           </div>
         </div>
       </section>
@@ -373,13 +318,26 @@ export default function Home() {
       <footer style={{
         background: '#000000',
         color: '#ffffff',
-        padding: '3rem 0',
+        padding: '3rem 2rem',
         textAlign: 'center'
       }}>
-        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
-          <p style={{fontSize: '1rem', fontWeight: '400'}}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto'
+        }}>
+          <div style={{
+            fontSize: '0.9rem',
+            color: '#999999',
+            marginBottom: '1rem'
+          }}>
+            Made with • California
+          </div>
+          <div style={{
+            fontSize: '0.8rem',
+            color: '#666666'
+          }}>
             &copy; 2025 KeamVisuals. All rights reserved.
-          </p>
+          </div>
         </div>
       </footer>
     </div>
