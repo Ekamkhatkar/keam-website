@@ -8,7 +8,6 @@ import { workItems } from '../../lib/data'
 interface WorkItem {
   id: number;
   title: string;
-  category: string;
   description: string;
   images: string[];
   size: string;
