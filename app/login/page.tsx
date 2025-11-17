@@ -25,7 +25,6 @@ export default function Login() {
 
       if (error) throw error
 
-      // Redirect to dashboard on success
       if (data.user) {
         router.push('/dashboard')
         router.refresh()
@@ -44,18 +43,20 @@ export default function Login() {
       color: 'white', 
       paddingTop: '80px',
       position: 'relative',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      {/* Animated background elements */}
+      {/* Animated Background Glows */}
       <div style={{
         position: 'absolute',
         top: '10%',
         left: '10%',
         width: '300px',
         height: '300px',
-        background: 'radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%)',
         borderRadius: '50%',
-        animation: 'float 6s ease-in-out infinite'
+        animation: 'float 6s ease-in-out infinite',
+        filter: 'blur(20px)'
       }} />
       <div style={{
         position: 'absolute',
@@ -63,9 +64,22 @@ export default function Login() {
         right: '10%',
         width: '200px',
         height: '200px',
-        background: 'radial-gradient(circle, rgba(185, 28, 28, 0.08) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(185, 28, 28, 0.1) 0%, transparent 70%)',
         borderRadius: '50%',
-        animation: 'float 8s ease-in-out infinite reverse'
+        animation: 'float 8s ease-in-out infinite reverse',
+        filter: 'blur(15px)'
+      }} />
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        width: '400px',
+        height: '400px',
+        background: 'radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, transparent 70%)',
+        borderRadius: '50%',
+        animation: 'float 10s ease-in-out infinite',
+        filter: 'blur(25px)',
+        transform: 'translate(-50%, -50%)'
       }} />
       
       <div style={{
@@ -75,26 +89,33 @@ export default function Login() {
         position: 'relative',
         zIndex: 10
       }}>
+        {/* Glassmorphic Card */}
         <div style={{
           background: 'rgba(0, 0, 0, 0.8)',
           border: '1px solid rgba(239, 68, 68, 0.3)',
           borderRadius: '20px',
           padding: '3rem 2.5rem',
           backdropFilter: 'blur(10px)',
-          boxShadow: '0 20px 40px rgba(239, 68, 68, 0.1), 0 0 80px rgba(185, 28, 28, 0.05)',
+          boxShadow: `
+            0 20px 40px rgba(239, 68, 68, 0.1), 
+            0 0 80px rgba(185, 28, 28, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1)
+          `,
           position: 'relative',
           overflow: 'hidden'
         }}>
-          {/* Accent glow */}
+          {/* Top Accent Glow */}
           <div style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
             height: '2px',
-            background: 'linear-gradient(90deg, transparent, #ef4444, transparent)'
+            background: 'linear-gradient(90deg, transparent, #ef4444, transparent)',
+            boxShadow: '0 0 20px rgba(239, 68, 68, 0.5)'
           }} />
           
+          {/* Header */}
           <h1 style={{
             fontSize: '2.5rem',
             fontWeight: 'bold',
@@ -112,12 +133,15 @@ export default function Login() {
             color: '#9ca3af',
             textAlign: 'center',
             marginBottom: '2.5rem',
-            fontSize: '1.1rem'
+            fontSize: '1.1rem',
+            fontWeight: '400'
           }}>
             Sign in to your account
           </p>
           
+          {/* Login Form */}
           <form onSubmit={handleLogin} style={{display: 'flex', flexDirection: 'column', gap: '2rem'}}>
+            {/* Email Input */}
             <div>
               <label style={{
                 display: 'block',
@@ -142,7 +166,8 @@ export default function Login() {
                   color: 'white',
                   fontSize: '1rem',
                   transition: 'all 0.3s ease',
-                  outline: 'none'
+                  outline: 'none',
+                  fontFamily: 'inherit'
                 }}
                 placeholder="your@email.com"
                 onFocus={(e) => {
@@ -158,6 +183,7 @@ export default function Login() {
               />
             </div>
 
+            {/* Password Input */}
             <div>
               <label style={{
                 display: 'block',
@@ -182,7 +208,8 @@ export default function Login() {
                   color: 'white',
                   fontSize: '1rem',
                   transition: 'all 0.3s ease',
-                  outline: 'none'
+                  outline: 'none',
+                  fontFamily: 'inherit'
                 }}
                 placeholder="••••••••"
                 onFocus={(e) => {
@@ -198,6 +225,7 @@ export default function Login() {
               />
             </div>
 
+            {/* Error Message */}
             {error && (
               <div style={{
                 background: 'rgba(239, 68, 68, 0.1)',
@@ -208,12 +236,17 @@ export default function Login() {
                 textAlign: 'center',
                 fontSize: '1rem',
                 fontWeight: '500',
-                backdropFilter: 'blur(10px)'
+                backdropFilter: 'blur(10px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem'
               }}>
                 ⚠️ {error}
               </div>
             )}
 
+            {/* Sign In Button */}
             <button
               type="submit"
               disabled={loading}
@@ -235,18 +268,30 @@ export default function Login() {
                   ? 'none' 
                   : '0 8px 25px rgba(239, 68, 68, 0.3), 0 0 0 1px rgba(239, 68, 68, 0.2)',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                fontFamily: 'inherit',
+                transform: 'scale(1)'
               }}
               onMouseOver={(e) => {
                 if (!loading) {
-                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1)'
                   e.currentTarget.style.boxShadow = '0 12px 30px rgba(239, 68, 68, 0.4), 0 0 0 1px rgba(239, 68, 68, 0.3)'
                 }
               }}
               onMouseOut={(e) => {
                 if (!loading) {
-                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
                   e.currentTarget.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.3), 0 0 0 1px rgba(239, 68, 68, 0.2)'
+                }
+              }}
+              onMouseDown={(e) => {
+                if (!loading) {
+                  e.currentTarget.style.transform = 'translateY(0) scale(0.97)'
+                }
+              }}
+              onMouseUp={(e) => {
+                if (!loading) {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1)'
                 }
               }}
             >
@@ -272,32 +317,29 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Social Login Buttons */}
-<div style={{
-  marginTop: '2.5rem', 
-  paddingTop: '2.5rem', 
-  borderTop: '1px solid rgba(239, 68, 68, 0.2)'
-}}>
-  <div style={{
-    textAlign: 'center', 
-    color: '#9ca3af', 
-    marginBottom: '1.5rem',
-    fontSize: '1rem'
-  }}>
-    Or continue with
-  </div>
-  <div style={{
-    display: 'flex', 
-    gap: '1.5rem', // ← Increase gap from 1rem to 1.5rem
-    justifyContent: 'center',
-    flexDirection: 'column', // ← Stack vertically instead of side-by-side
-    alignItems: 'center',
-    maxWidth: '300px',
-    margin: '0 auto'
-  }}>
-    <AuthButton />
-  </div>
-</div>
+          {/* Social Login Section */}
+          <div style={{
+            marginTop: '2.5rem', 
+            paddingTop: '2.5rem', 
+            borderTop: '1px solid rgba(239, 68, 68, 0.2)'
+          }}>
+            <div style={{
+              textAlign: 'center', 
+              color: '#9ca3af', 
+              marginBottom: '1.5rem',
+              fontSize: '1rem',
+              fontWeight: '500'
+            }}>
+              Or continue with
+            </div>
+            <div style={{
+              display: 'flex', 
+              gap: '1rem', 
+              justifyContent: 'center'
+            }}>
+              <AuthButton />
+            </div>
+          </div>
 
           {/* Sign Up Link */}
           <div style={{
@@ -308,7 +350,8 @@ export default function Login() {
             <p style={{
               color: '#9ca3af', 
               fontSize: '1rem', 
-              textAlign: 'center'
+              textAlign: 'center',
+              fontWeight: '400'
             }}>
               Don't have an account?{' '}
               <a 
@@ -321,9 +364,11 @@ export default function Login() {
                 }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.textShadow = '0 0 10px rgba(239, 68, 68, 0.5)'
+                  e.currentTarget.style.color = '#f87171'
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.textShadow = 'none'
+                  e.currentTarget.style.color = '#ef4444'
                 }}
               >
                 Create account
@@ -333,15 +378,24 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Add CSS animations */}
-      <style jsx>{`
+      {/* CSS Animations */}
+      <style jsx global>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
+          0%, 100% { 
+            transform: translateY(0px) rotate(0deg); 
+          }
+          50% { 
+            transform: translateY(-20px) rotate(180deg); 
+          }
         }
+        
         @keyframes spin {
-          0% { transform: translate(-50%, -50%) rotate(0deg); }
-          100% { transform: translate(-50%, -50%) rotate(360deg); }
+          0% { 
+            transform: translate(-50%, -50%) rotate(0deg); 
+          }
+          100% { 
+            transform: translate(-50%, -50%) rotate(360deg); 
+          }
         }
       `}</style>
     </div>

@@ -1,84 +1,122 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import AuthButton from '../../components/shared/AuthButton'
 import { supabase } from '../../lib/supabase'
-import { User } from '@supabase/supabase-js'
+import './login.css'
 
-export default function AuthButton() {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+export default function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const router = useRouter()
 
-  useEffect(() => {
-    checkUser()
-    
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null)
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      })
+
+      if (error) throw error
+
+      if (data.user) {
+        router.push('/dashboard')
+        router.refresh()
+      }
+    } catch (err) {
+      setError('Invalid credentials')
+    } finally {
       setLoading(false)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  async function checkUser() {
-    const { data: { user } } = await supabase.auth.getUser()
-    setUser(user)
-    setLoading(false)
-  }
-
-  async function signInWithDiscord() {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'discord',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`
-      }
-    })
-  }
-
-  async function signInWithGoogle() {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`
-      }
-    })
-  }
-
-  async function signOut() {
-    const { error } = await supabase.auth.signOut()
-  }
-
-  if (loading) {
-    return <div className="w-8 h-8 rounded-full border-2 border-purple-500 border-t-transparent animate-spin"></div>
-  }
-
-  if (user) {
-    return (
-      <div className="flex items-center gap-4">
-        <span className="text-sm">Hi, {user.email}</span>
-        <button
-          onClick={signOut}
-          className="px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors"
-        >
-          Sign Out
-        </button>
-      </div>
-    )
+    }
   }
 
   return (
-    <div className="flex gap-2">
-      <button
-        onClick={signInWithDiscord}
-        className="px-4 py-2 rounded-lg bg-[#5865F2] hover:opacity-90 transition-opacity"
-      >
-        Discord
-      </button>
-      <button
-        onClick={signInWithGoogle}
-        className="px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors"
-      >
-        Google
-      </button>
+    <div className="login-container">
+      {/* Header */}
+      <header className="nav">
+        <h1 className="logo">KeamVisuals</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/services">Services</a>
+          <a href="/projects">Projects</a>
+        </nav>
+        <a href="/signup" className="btn-primary">Get Started</a>
+      </header>
+
+      {/* Login Section */}
+      <section className="login-section">
+        <div className="login-card">
+          <div className="login-header">
+            <h2>Welcome Back</h2>
+            <p>Sign in to your KeamVisuals account</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="login-form">
+            <div className="input-group">
+              <label>Email Address</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="your@email.com"
+                className="form-input"
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="••••••••"
+                className="form-input"
+              />
+            </div>
+
+            {error && (
+              <div className="error-message">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary login-btn"
+            >
+              {loading ? 'Signing In...' : 'Sign In'}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="divider">
+            <span>Or continue with</span>
+          </div>
+
+          {/* Social Auth */}
+          <div className="social-auth">
+            <AuthButton />
+          </div>
+
+          {/* Sign Up Link */}
+          <div className="signup-link">
+            <p>
+              Don't have an account?{' '}
+              <a href="/signup">Create account</a>
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
