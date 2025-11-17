@@ -10,19 +10,120 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div>
-      {/* Header */}
-      <header className="header">
-        <div className="container" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-          <div className="gradient-text" style={{fontSize: '1.5rem', fontWeight: 'bold'}}>KeamVisuals</div>
+    <div style={{
+      background: 'linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%)',
+      color: 'white',
+      minHeight: '100vh',
+      position: 'relative',
+      overflow: 'hidden',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    }}>
+      {/* Animated Background Glows */}
+      <div style={{
+        position: 'absolute',
+        top: '10%',
+        left: '10%',
+        width: '300px',
+        height: '300px',
+        background: 'radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%)',
+        borderRadius: '50%',
+        animation: 'float 6s ease-in-out infinite',
+        filter: 'blur(20px)'
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        right: '10%',
+        width: '200px',
+        height: '200px',
+        background: 'radial-gradient(circle, rgba(185, 28, 28, 0.1) 0%, transparent 70%)',
+        borderRadius: '50%',
+        animation: 'float 8s ease-in-out infinite reverse',
+        filter: 'blur(15px)'
+      }} />
+
+      {/* Glassmorphic Header */}
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        background: 'rgba(0, 0, 0, 0.8)',
+        backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(239, 68, 68, 0.3)',
+        padding: '1.2rem 0',
+        zIndex: 1000
+      }}>
+        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            textShadow: '0 0 20px rgba(239, 68, 68, 0.3)'
+          }}>
+            KeamVisuals
+          </div>
           
           <div style={{display: 'flex', alignItems: 'center', gap: '2rem'}}>
             <nav style={{display: 'flex', gap: '2rem'}}>
-              <a href="/" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem', fontWeight: '500'}}>Home</a>
-              <a href="/work" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem', fontWeight: '500'}}>Work</a>
-              <a href="/prices" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem', fontWeight: '500'}}>Prices</a>
+              <a href="/" style={{
+                color: 'white', 
+                textDecoration: 'none', 
+                fontSize: '0.95rem', 
+                fontWeight: '500',
+                transition: 'all 0.3s ease',
+                padding: '0.5rem 1rem',
+                borderRadius: '8px'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
+              onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+              >
+                Home
+              </a>
+              <a href="/work" style={{
+                color: 'white', 
+                textDecoration: 'none', 
+                fontSize: '0.95rem', 
+                fontWeight: '500',
+                transition: 'all 0.3s ease',
+                padding: '0.5rem 1rem',
+                borderRadius: '8px'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
+              onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+              >
+                Work
+              </a>
+              <a href="/prices" style={{
+                color: 'white', 
+                textDecoration: 'none', 
+                fontSize: '0.95rem', 
+                fontWeight: '500',
+                transition: 'all 0.3s ease',
+                padding: '0.5rem 1rem',
+                borderRadius: '8px'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
+              onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+              >
+                Prices
+              </a>
               {!user && (
-                <a href="/login" style={{color: 'white', textDecoration: 'none', fontSize: '0.95rem', fontWeight: '500'}}>Login</a>
+                <a href="/login" style={{
+                  color: 'white', 
+                  textDecoration: 'none', 
+                  fontSize: '0.95rem', 
+                  fontWeight: '500',
+                  transition: 'all 0.3s ease',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '8px'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                >
+                  Login
+                </a>
               )}
             </nav>
             
@@ -31,22 +132,26 @@ export default function Home() {
                 <button 
                   onClick={() => setIsOpen(!isOpen)}
                   style={{
-                    background: 'rgba(255,255,255,0.1)',
-                    border: '1px solid rgba(255,255,255,0.3)',
-                    borderRadius: '8px',
-                    padding: '8px 12px',
+                    background: 'rgba(239, 68, 68, 0.1)',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                    borderRadius: '12px',
+                    padding: '0.75rem 1rem',
                     color: 'white',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px'
+                    gap: '0.75rem',
+                    transition: 'all 0.3s ease',
+                    backdropFilter: 'blur(10px)'
                   }}
+                  onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'}
+                  onMouseOut={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
                 >
                   <div style={{
                     width: '32px',
                     height: '32px',
                     borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)',
+                    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -64,27 +169,30 @@ export default function Home() {
                     top: '100%',
                     right: 0,
                     marginTop: '8px',
-                    background: 'rgba(0,0,0,0.9)',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: '8px',
-                    padding: '8px',
+                    background: 'rgba(0, 0, 0, 0.9)',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                    borderRadius: '12px',
+                    padding: '0.5rem',
                     minWidth: '200px',
-                    backdropFilter: 'blur(10px)',
-                    zIndex: 1000
+                    backdropFilter: 'blur(20px)',
+                    zIndex: 1000,
+                    boxShadow: '0 20px 40px rgba(239, 68, 68, 0.1)'
                   }}>
-                    <div style={{ padding: '8px 12px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                      <p style={{ fontWeight: 'bold', color: 'white' }}>{user.email}</p>
+                    <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                      <p style={{ fontWeight: '600', color: 'white', fontSize: '0.9rem' }}>{user.email}</p>
                     </div>
                     <a 
                       href="/dashboard" 
                       style={{
                         display: 'block',
-                        padding: '8px 12px',
+                        padding: '0.75rem 1rem',
                         color: 'white',
                         textDecoration: 'none',
-                        borderRadius: '4px'
+                        borderRadius: '8px',
+                        fontSize: '0.9rem',
+                        transition: 'all 0.3s ease'
                       }}
-                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'}
                       onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
                     >
                       My Orders
@@ -96,15 +204,17 @@ export default function Home() {
                       }}
                       style={{
                         width: '100%',
-                        padding: '8px 12px',
+                        padding: '0.75rem 1rem',
                         background: 'transparent',
                         border: 'none',
                         color: 'white',
                         textAlign: 'left',
                         cursor: 'pointer',
-                        borderRadius: '4px'
+                        borderRadius: '8px',
+                        fontSize: '0.9rem',
+                        transition: 'all 0.3s ease'
                       }}
-                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'}
                       onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
                     >
                       Sign Out
@@ -118,53 +228,202 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content">
-          <h1 className="gradient-text" style={{fontSize: '5rem', fontWeight: 'bold', marginBottom: '1.5rem', lineHeight: '1.1'}}>
+      <section style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        position: 'relative',
+        paddingTop: '80px'
+      }}>
+        <div style={{position: 'relative', zIndex: 2}}>
+          <h1 style={{
+            fontSize: '5rem',
+            fontWeight: 'bold',
+            marginBottom: '1.5rem',
+            lineHeight: '1.1',
+            background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            textShadow: '0 0 30px rgba(239, 68, 68, 0.3)'
+          }}>
             Keam Visuals
           </h1>
-          <p style={{fontSize: '1.5rem', color: '#9ca3af', marginBottom: '3rem', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto'}}>
+          <p style={{
+            fontSize: '1.5rem', 
+            color: '#9ca3af', 
+            marginBottom: '3rem', 
+            maxWidth: '600px', 
+            marginLeft: 'auto', 
+            marginRight: 'auto',
+            fontWeight: '400'
+          }}>
             2 Years of Design Experience • California
           </p>
-          <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap'}}>
-            <a href="/work" className="btn-primary">View My Work</a>
-            <a href="/prices" className="btn-secondary">Get Started</a>
+          <div style={{display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+            <a href="/work" style={{
+              background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+              border: 'none',
+              padding: '1.2rem 2.5rem',
+              borderRadius: '14px',
+              color: 'white',
+              fontWeight: '700',
+              fontSize: '1.1rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              textDecoration: 'none',
+              display: 'inline-block',
+              boxShadow: '0 8px 25px rgba(239, 68, 68, 0.3)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-3px)'
+              e.currentTarget.style.boxShadow = '0 12px 30px rgba(239, 68, 68, 0.4)'
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.3)'
+            }}
+            >
+              View My Work
+            </a>
+            <a href="/prices" style={{
+              background: 'transparent',
+              border: '1px solid rgba(239, 68, 68, 0.5)',
+              padding: '1.2rem 2.5rem',
+              borderRadius: '14px',
+              color: 'white',
+              fontWeight: '700',
+              fontSize: '1.1rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              textDecoration: 'none',
+              display: 'inline-block',
+              backdropFilter: 'blur(10px)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'
+              e.currentTarget.style.transform = 'translateY(-3px)'
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.transform = 'translateY(0)'
+            }}
+            >
+              Get Started
+            </a>
           </div>
         </div>
       </section>
 
       {/* Work Section */}
-      <section className="section section-dark">
-        <div className="container">
-          <h2 className="section-title gradient-text">Featured Work</h2>
-          <p className="section-subtitle">Check out some of my recent design projects</p>
+      <section style={{
+        padding: '6rem 0',
+        background: 'transparent',
+        position: 'relative'
+      }}>
+        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
+          <h2 style={{
+            textAlign: 'center',
+            fontSize: '3rem',
+            marginBottom: '1rem',
+            background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontWeight: 'bold'
+          }}>
+            Featured Work
+          </h2>
+          <p style={{
+            textAlign: 'center', 
+            color: '#9ca3af', 
+            fontSize: '1.25rem', 
+            marginBottom: '4rem',
+            fontWeight: '400'
+          }}>
+            Check out some of my recent design projects
+          </p>
           
-          <div className="work-grid">
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+            gap: '2rem',
+            padding: '2rem 0'
+          }}>
             {featuredWork.map(item => (
               <a 
                 key={item.id} 
                 href="/work"
-                className="glow-card"
-                style={{cursor: 'pointer', textDecoration: 'none', display: 'block'}}
+                style={{
+                  background: 'rgba(0, 0, 0, 0.6)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  borderRadius: '20px',
+                  padding: '2rem',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  backdropFilter: 'blur(10px)',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  display: 'block',
+                  transition: 'all 0.4s ease',
+                  boxShadow: '0 8px 25px rgba(239, 68, 68, 0.1)'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.6)'
+                  e.currentTarget.style.transform = 'translateY(-8px)'
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(239, 68, 68, 0.2)'
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.1)'
+                }}
               >
-                <div className="work-image" style={{position: 'relative'}}>
+                <div style={{
+                  width: '100%',
+                  height: '200px',
+                  background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05))',
+                  border: '1px solid rgba(239, 68, 68, 0.2)',
+                  borderRadius: '12px',
+                  marginBottom: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '1.1rem',
+                  fontWeight: '600'
+                }}>
                   {item.title}
                   <div style={{
                     position: 'absolute',
-                    bottom: '8px',
-                    right: '8px',
-                    background: 'rgba(0,0,0,0.8)',
+                    bottom: '1rem',
+                    right: '1rem',
+                    background: 'rgba(239, 68, 68, 0.2)',
                     color: 'white',
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    fontSize: '0.8rem'
+                    padding: '0.5rem 1rem',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                    fontWeight: '600',
+                    backdropFilter: 'blur(10px)'
                   }}>
                     {item.images.length} designs
                   </div>
                 </div>
-                <h3 style={{fontSize: '1.25rem', fontWeight: '600', marginBottom: '0.5rem', color: 'white'}}>{item.title}</h3>
-                <p style={{color: '#aaaaaaff', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.5rem'}}></p>
-                <p style={{color: '#9ca3af', fontSize: '0.95rem'}}>{item.description}</p>
+                <h3 style={{
+                  fontSize: '1.5rem', 
+                  fontWeight: '700', 
+                  marginBottom: '1rem', 
+                  color: 'white'
+                }}>
+                  {item.title}
+                </h3>
+                <p style={{
+                  color: '#9ca3af', 
+                  fontSize: '1rem',
+                  lineHeight: '1.6'
+                }}>
+                  {item.description}
+                </p>
               </a>
             ))}
           </div>
@@ -172,20 +431,86 @@ export default function Home() {
       </section>
 
       {/* Pricing Preview */}
-      <section className="section">
-        <div className="container" style={{textAlign: 'center'}}>
-          <h2 className="section-title gradient-text">Ready to Get Started?</h2>
-          <p className="section-subtitle">Check out our affordable packages and pricing options</p>
-          <a href="/prices" className="btn-primary" style={{fontSize: '1.1rem', padding: '1.2rem 2.5rem'}}>View All Pricing</a>
+      <section style={{
+        padding: '6rem 0',
+        background: 'transparent',
+        position: 'relative',
+        textAlign: 'center'
+      }}>
+        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
+          <h2 style={{
+            fontSize: '3rem',
+            marginBottom: '1rem',
+            background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontWeight: 'bold'
+          }}>
+            Ready to Get Started?
+          </h2>
+          <p style={{
+            color: '#9ca3af', 
+            fontSize: '1.25rem', 
+            marginBottom: '3rem',
+            fontWeight: '400'
+          }}>
+            Check out our affordable packages and pricing options
+          </p>
+          <a href="/prices" style={{
+            background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+            border: 'none',
+            padding: '1.4rem 3rem',
+            borderRadius: '14px',
+            color: 'white',
+            fontWeight: '700',
+            fontSize: '1.2rem',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            textDecoration: 'none',
+            display: 'inline-block',
+            boxShadow: '0 8px 25px rgba(239, 68, 68, 0.3)'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-3px)'
+            e.currentTarget.style.boxShadow = '0 12px 30px rgba(239, 68, 68, 0.4)'
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)'
+            e.currentTarget.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.3)'
+          }}
+          >
+            View All Pricing
+          </a>
         </div>
       </section>
 
       {/* Footer */}
-      <footer style={{background: '#000000', borderTop: '1px solid rgba(255,255,255,0.08)', padding: '3rem 0', textAlign: 'center', color: '#6b7280'}}>
-        <div className="container">
-          <p>&copy; 2025 KeamVisuals. All rights reserved.</p>
+      <footer style={{
+        background: 'rgba(0, 0, 0, 0.8)',
+        borderTop: '1px solid rgba(239, 68, 68, 0.2)',
+        padding: '3rem 0',
+        textAlign: 'center',
+        color: '#9ca3af',
+        backdropFilter: 'blur(10px)'
+      }}>
+        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
+          <p style={{fontSize: '1rem', fontWeight: '400'}}>
+            &copy; 2025 KeamVisuals. All rights reserved.
+          </p>
         </div>
       </footer>
+
+      {/* CSS Animations */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { 
+            transform: translateY(0px) rotate(0deg); 
+          }
+          50% { 
+            transform: translateY(-20px) rotate(180deg); 
+          }
+        }
+      `}</style>
     </div>
   )
 }
