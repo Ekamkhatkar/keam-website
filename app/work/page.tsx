@@ -23,295 +23,293 @@ export default function Work() {
 
   return (
     <div style={{
-      background: 'linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%)',
-      color: 'white',
+      background: '#000000',
+      color: '#ffffff',
       minHeight: '100vh',
       position: 'relative',
       overflow: 'hidden',
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      {/* Animated Background Glows */}
+      {/* SINGLE FAST WARPING SMOKE STRIPE */}
       <div style={{
         position: 'absolute',
-        top: '10%',
-        left: '10%',
-        width: '300px',
-        height: '300px',
-        background: 'radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%)',
-        borderRadius: '50%',
-        animation: 'float 6s ease-in-out infinite',
-        filter: 'blur(20px)'
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '20%',
-        right: '10%',
-        width: '200px',
-        height: '200px',
-        background: 'radial-gradient(circle, rgba(185, 28, 28, 0.1) 0%, transparent 70%)',
-        borderRadius: '50%',
-        animation: 'float 8s ease-in-out infinite reverse',
-        filter: 'blur(15px)'
-      }} />
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+        background: '#000000'
+      }}>
+        {/* Main fast-moving smoke stripe */}
+        <div style={{
+          position: 'absolute',
+          top: '-20%',
+          left: '-50%',
+          width: '200%',
+          height: '140%',
+          background: `
+            radial-gradient(ellipse 800px 400px at 30% 30%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 20%, rgba(255, 255, 255, 0.05) 40%, transparent 60%),
+            radial-gradient(ellipse 600px 300px at 70% 60%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 25%, transparent 55%)
+          `,
+          filter: 'blur(80px)',
+          animation: 'fastSmoke 8s ease-in-out infinite',
+          transformOrigin: 'center center',
+          willChange: 'transform'
+        }} />
+        
+        {/* Secondary flowing element for depth */}
+        <div style={{
+          position: 'absolute',
+          bottom: '-10%',
+          right: '-30%',
+          width: '150%',
+          height: '100%',
+          background: 'radial-gradient(ellipse 700px 350px at 50% 50%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 30%, transparent 60%)',
+          filter: 'blur(90px)',
+          animation: 'fastSmoke2 10s ease-in-out infinite',
+          transformOrigin: 'center center',
+          willChange: 'transform'
+        }} />
+        
+        {/* Subtle ambient glow */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: '100%',
+          height: '100%',
+          background: 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%)',
+          filter: 'blur(120px)',
+          transform: 'translate(-50%, -50%)',
+          animation: 'subtleGlow 12s ease-in-out infinite'
+        }} />
+      </div>
 
-      {/* Glassmorphic Header */}
+      {/* MINIMAL HEADER */}
       <header style={{
         position: 'fixed',
         top: 0,
         width: '100%',
-        background: 'rgba(0, 0, 0, 0.8)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(239, 68, 68, 0.3)',
-        padding: '1.2rem 0',
-        zIndex: 1000
+        padding: '2rem 3rem',
+        zIndex: 1000,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
       }}>
-        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        {/* Logo */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          fontSize: '1.1rem',
+          fontWeight: '500',
+          color: '#ffffff'
+        }}>
           <div style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 0 20px rgba(239, 68, 68, 0.3)'
-          }}>
-            KeamVisuals
-          </div>
+            width: '24px',
+            height: '24px',
+            background: '#ffffff',
+            borderRadius: '4px'
+          }} />
+          Keam Visuals
+        </div>
+        
+        {/* Nav */}
+        <nav style={{
+          display: 'flex',
+          gap: '2.5rem',
+          alignItems: 'center'
+        }}>
+          {['Home', 'Work', 'Prices', 'Contact'].map((item, idx) => (
+            <a key={idx} href={item === 'Home' ? '/' : item === 'Work' ? '/work' : item === 'Prices' ? '/prices' : '#'} style={{
+              color: item === 'Work' ? '#ffffff' : 'rgba(255, 255, 255, 0.7)',
+              textDecoration: 'none',
+              fontSize: '0.95rem',
+              fontWeight: '400',
+              transition: 'color 0.3s ease',
+              ...(item === 'Work' && {
+                background: 'rgba(255, 255, 255, 0.1)',
+                padding: '0.5rem 1rem',
+                borderRadius: '8px'
+              })
+            }}
+            onMouseOver={(e) => e.currentTarget.style.color = '#ffffff'}
+            onMouseOut={(e) => e.currentTarget.style.color = item === 'Work' ? '#ffffff' : 'rgba(255, 255, 255, 0.7)'}
+            >
+              {item}
+            </a>
+          ))}
           
-          <div style={{display: 'flex', alignItems: 'center', gap: '2rem'}}>
-            <nav style={{display: 'flex', gap: '2rem'}}>
-              <a href="/" style={{
-                color: 'white', 
-                textDecoration: 'none', 
-                fontSize: '0.95rem', 
-                fontWeight: '500',
-                transition: 'all 0.3s ease',
-                padding: '0.5rem 1rem',
-                borderRadius: '8px'
-              }}
-              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
-              onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-              >
-                Home
-              </a>
-              <a href="/work" style={{
-                color: 'white', 
-                textDecoration: 'none', 
-                fontSize: '0.95rem', 
-                fontWeight: '500',
-                transition: 'all 0.3s ease',
-                padding: '0.5rem 1rem',
-                borderRadius: '8px',
-                background: 'rgba(239, 68, 68, 0.2)'
-              }}>
-                Work
-              </a>
-              <a href="/prices" style={{
-                color: 'white', 
-                textDecoration: 'none', 
-                fontSize: '0.95rem', 
-                fontWeight: '500',
-                transition: 'all 0.3s ease',
-                padding: '0.5rem 1rem',
-                borderRadius: '8px'
-              }}
-              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
-              onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-              >
-                Prices
-              </a>
-              {!user && (
-                <a href="/login" style={{
-                  color: 'white', 
-                  textDecoration: 'none', 
-                  fontSize: '0.95rem', 
-                  fontWeight: '500',
-                  transition: 'all 0.3s ease',
+          {user ? (
+            <div style={{position: 'relative'}}>
+              <button 
+                onClick={() => setIsOpen(!isOpen)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '8px',
                   padding: '0.5rem 1rem',
-                  borderRadius: '8px'
+                  color: 'white',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: '400'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
-                onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-                >
-                  Login
-                </a>
-              )}
-            </nav>
-            
-            {user && (
-              <div style={{position: 'relative'}}>
-                <button 
-                  onClick={() => setIsOpen(!isOpen)}
-                  style={{
-                    background: 'rgba(239, 68, 68, 0.1)',
-                    border: '1px solid rgba(239, 68, 68, 0.3)',
-                    borderRadius: '12px',
+              >
+                {user.email?.split('@')[0]}
+              </button>
+
+              {isOpen && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  right: 0,
+                  marginTop: '10px',
+                  background: '#0a0a0a',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '12px',
+                  padding: '0.5rem',
+                  minWidth: '180px',
+                  zIndex: 1000
+                }}>
+                  <a href="/dashboard" style={{
+                    display: 'block',
                     padding: '0.75rem 1rem',
                     color: 'white',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    transition: 'all 0.3s ease',
-                    backdropFilter: 'blur(10px)'
+                    textDecoration: 'none',
+                    borderRadius: '8px',
+                    fontSize: '0.9rem',
+                    transition: 'background 0.2s'
                   }}
-                  onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'}
-                  onMouseOut={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
-                >
-                  <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 'bold',
-                    fontSize: '14px'
-                  }}>
-                    {user?.email?.charAt(0).toUpperCase() ?? 'U'}
-                  </div>
-                  {user?.email ?? 'User'}
-                </button>
-
-                {isOpen && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '100%',
-                    right: 0,
-                    marginTop: '8px',
-                    background: 'rgba(0, 0, 0, 0.9)',
-                    border: '1px solid rgba(239, 68, 68, 0.3)',
-                    borderRadius: '12px',
-                    padding: '0.5rem',
-                    minWidth: '200px',
-                    backdropFilter: 'blur(20px)',
-                    zIndex: 1000,
-                    boxShadow: '0 20px 40px rgba(239, 68, 68, 0.1)'
-                  }}>
-                    <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(239, 68, 68, 0.2)' }}>
-                      <p style={{ fontWeight: '600', color: 'white', fontSize: '0.9rem' }}>{user?.email}</p>
-                    </div>
-                    <a 
-                      href="/dashboard" 
-                      style={{
-                        display: 'block',
-                        padding: '0.75rem 1rem',
-                        color: 'white',
-                        textDecoration: 'none',
-                        borderRadius: '8px',
-                        fontSize: '0.9rem',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'}
-                      onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-                    >
-                      My Orders
-                    </a>
-                    <button
-                      onClick={() => {
-                        signOut()
-                        setIsOpen(false)
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '0.75rem 1rem',
-                        background: 'transparent',
-                        border: 'none',
-                        color: 'white',
-                        textAlign: 'left',
-                        cursor: 'pointer',
-                        borderRadius: '8px',
-                        fontSize: '0.9rem',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'}
-                      onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-                    >
-                      Sign Out
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
+                  onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
+                  onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                  >
+                    Dashboard
+                  </a>
+                  <button
+                    onClick={() => {
+                      signOut()
+                      setIsOpen(false)
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem 1rem',
+                      background: 'transparent',
+                      border: 'none',
+                      color: 'white',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      borderRadius: '8px',
+                      fontSize: '0.9rem',
+                      transition: 'background 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
+                    onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <a href="/login" style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: '8px',
+              padding: '0.5rem 1.25rem',
+              color: 'white',
+              textDecoration: 'none',
+              fontSize: '0.9rem',
+              fontWeight: '400',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+            }}
+            >
+              Login
+            </a>
+          )}
+        </nav>
       </header>
 
-      {/* Work Content */}
+      {/* WORK SECTION */}
       <section style={{
-        padding: '120px 0 6rem 0',
-        background: 'transparent',
+        padding: '8rem 3rem',
         position: 'relative'
       }}>
-        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
-          <h1 style={{
+        <div style={{maxWidth: '1400px', margin: '0 auto'}}>
+          {/* Section header */}
+          <div style={{
             textAlign: 'center',
-            fontSize: '3.5rem',
-            marginBottom: '1rem',
-            background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            fontWeight: 'bold'
+            marginBottom: '5rem'
           }}>
-            My Portfolio
-          </h1>
-          <p style={{
-            textAlign: 'center', 
-            color: '#9ca3af', 
-            fontSize: '1.25rem', 
-            marginBottom: '4rem',
-            fontWeight: '400'
-          }}>
-            Explore my latest design work for content creators and streamers
-          </p>
+            <h1 style={{
+              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+              fontWeight: '300',
+              marginBottom: '1.5rem',
+              letterSpacing: '-0.02em'
+            }}>
+              Portfolio
+            </h1>
+            <p style={{
+              fontSize: '1.125rem',
+              color: 'rgba(255, 255, 255, 0.5)',
+              fontWeight: '400'
+            }}>
+              Explore my latest design work for content creators and streamers
+            </p>
+          </div>
           
-          {/* Work Grid */}
+          {/* Work grid */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-            gap: '2rem',
-            padding: '2rem 0'
+            gap: '2rem'
           }}>
             {filteredItems.map((item) => (
               <div 
                 key={item.id} 
                 style={{
-                  background: 'rgba(0, 0, 0, 0.6)',
-                  border: '1px solid rgba(239, 68, 68, 0.3)',
-                  borderRadius: '20px',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderRadius: '16px',
                   padding: '2rem',
+                  textDecoration: 'none',
+                  display: 'block',
+                  transition: 'all 0.4s ease',
                   position: 'relative',
                   overflow: 'hidden',
-                  backdropFilter: 'blur(10px)',
-                  cursor: 'pointer',
-                  transition: 'all 0.4s ease',
-                  boxShadow: '0 8px 25px rgba(239, 68, 68, 0.1)'
+                  cursor: 'pointer'
                 }}
                 onClick={() => setSelectedWork(item)}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.6)'
-                  e.currentTarget.style.transform = 'translateY(-8px)'
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(239, 68, 68, 0.2)'
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'
+                  e.currentTarget.style.transform = 'translateY(-4px)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)'
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)'
                   e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.1)'
                 }}
               >
                 <div style={{
                   width: '100%',
                   height: '200px',
-                  background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05))',
-                  border: '1px solid rgba(239, 68, 68, 0.2)',
+                  background: 'rgba(255, 255, 255, 0.03)',
                   borderRadius: '12px',
                   marginBottom: '1.5rem',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '1.1rem',
-                  fontWeight: '600',
+                  fontSize: '0.9rem',
+                  color: 'rgba(255, 255, 255, 0.3)',
+                  fontWeight: '300',
                   position: 'relative'
                 }}>
                   {item.title}
@@ -319,29 +317,30 @@ export default function Work() {
                     position: 'absolute',
                     bottom: '1rem',
                     right: '1rem',
-                    background: 'rgba(239, 68, 68, 0.2)',
+                    background: 'rgba(255, 255, 255, 0.1)',
                     color: 'white',
                     padding: '0.5rem 1rem',
                     borderRadius: '8px',
                     fontSize: '0.8rem',
-                    fontWeight: '600',
-                    backdropFilter: 'blur(10px)'
+                    fontWeight: '400'
                   }}>
                     {item.images.length} designs
                   </div>
                 </div>
                 <h3 style={{
-                  fontSize: '1.5rem', 
-                  fontWeight: '700', 
-                  marginBottom: '1rem', 
-                  color: 'white'
+                  fontSize: '1.5rem',
+                  fontWeight: '400',
+                  marginBottom: '0.75rem',
+                  color: '#ffffff',
+                  letterSpacing: '-0.01em'
                 }}>
                   {item.title}
                 </h3>
                 <p style={{
-                  color: '#9ca3af', 
-                  fontSize: '1rem',
-                  lineHeight: '1.6'
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.6',
+                  fontWeight: '300'
                 }}>
                   {item.description}
                 </p>
@@ -376,8 +375,8 @@ export default function Work() {
                 position: 'fixed',
                 top: '2rem',
                 right: '2rem',
-                background: 'rgba(239, 68, 68, 0.2)',
-                border: '1px solid rgba(239, 68, 68, 0.5)',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
                 color: 'white',
                 fontSize: '1.5rem',
                 cursor: 'pointer',
@@ -390,8 +389,8 @@ export default function Work() {
                 transition: 'all 0.3s ease',
                 zIndex: 2001
               }}
-              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.3)'}
-              onMouseOut={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'}
+              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'}
+              onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
             >
               ×
             </button>
@@ -400,18 +399,16 @@ export default function Work() {
               color: 'white', 
               fontSize: '2.5rem', 
               marginBottom: '1rem',
-              background: 'linear-gradient(135deg, #ffffff 0%, #ef4444 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              fontWeight: 'bold'
+              fontWeight: '300',
+              letterSpacing: '-0.02em'
             }}>
               {selectedWork.title}
             </h2>
             <p style={{
-              color: '#ef4444', 
+              color: 'rgba(255, 255, 255, 0.5)', 
               fontSize: '1.2rem', 
               marginBottom: '3rem',
-              fontWeight: '600'
+              fontWeight: '400'
             }}>
               {selectedWork.size}
             </p>
@@ -420,11 +417,10 @@ export default function Work() {
               display: 'flex', 
               flexDirection: 'column', 
               gap: '3rem',
-              background: 'rgba(0, 0, 0, 0.6)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
-              borderRadius: '20px',
-              padding: '2rem',
-              backdropFilter: 'blur(10px)'
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: '16px',
+              padding: '2rem'
             }}>
               {selectedWork.images.map((image: string, index: number) => (
                 <img
@@ -433,9 +429,8 @@ export default function Work() {
                   alt={`${selectedWork.title} ${index + 1}`}
                   style={{
                     width: '100%',
-                    borderRadius: '16px',
-                    border: '1px solid rgba(239, 68, 68, 0.2)',
-                    boxShadow: '0 8px 25px rgba(239, 68, 68, 0.1)'
+                    borderRadius: '12px',
+                    border: '1px solid rgba(255, 255, 255, 0.1)'
                   }}
                 />
               ))}
@@ -444,31 +439,91 @@ export default function Work() {
         </div>
       )}
 
-      {/* Footer */}
+      {/* MINIMAL FOOTER */}
       <footer style={{
-        background: 'rgba(0, 0, 0, 0.8)',
-        borderTop: '1px solid rgba(239, 68, 68, 0.2)',
-        padding: '3rem 0',
-        textAlign: 'center',
-        color: '#9ca3af',
-        backdropFilter: 'blur(10px)'
+        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+        padding: '3rem',
+        textAlign: 'center'
       }}>
-        <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
-          <p style={{fontSize: '1rem', fontWeight: '400'}}>
-            &copy; 2025 KeamVisuals. All rights reserved.
-          </p>
-        </div>
+        <p style={{
+          color: 'rgba(255, 255, 255, 0.3)',
+          fontSize: '0.875rem',
+          fontWeight: '300'
+        }}>
+          © 2025 Keam Visuals. All rights reserved.
+        </p>
       </footer>
 
-      {/* CSS Animations */}
+      {/* ANIMATIONS */}
       <style jsx global>{`
-        @keyframes float {
-          0%, 100% { 
-            transform: translateY(0px) rotate(0deg); 
+        @keyframes fastSmoke {
+          0% {
+            transform: translate(-30%, -10%) rotate(-20deg) scaleX(0.8) scaleY(1.2);
           }
-          50% { 
-            transform: translateY(-20px) rotate(180deg); 
+          25% {
+            transform: translate(10%, 15%) rotate(10deg) scaleX(1.3) scaleY(0.9);
           }
+          50% {
+            transform: translate(40%, -5%) rotate(-15deg) scaleX(0.9) scaleY(1.4);
+          }
+          75% {
+            transform: translate(5%, 20%) rotate(25deg) scaleX(1.5) scaleY(0.7);
+          }
+          100% {
+            transform: translate(-30%, -10%) rotate(-20deg) scaleX(0.8) scaleY(1.2);
+          }
+        }
+
+        @keyframes fastSmoke2 {
+          0% {
+            transform: translate(20%, 10%) rotate(15deg) scaleX(1.2) scaleY(0.8);
+          }
+          33% {
+            transform: translate(-15%, -20%) rotate(-25deg) scaleX(0.7) scaleY(1.5);
+          }
+          66% {
+            transform: translate(30%, 5%) rotate(20deg) scaleX(1.4) scaleY(0.9);
+          }
+          100% {
+            transform: translate(20%, 10%) rotate(15deg) scaleX(1.2) scaleY(0.8);
+          }
+        }
+
+        @keyframes subtleGlow {
+          0%, 100% {
+            opacity: 0.3;
+            transform: translate(-50%, -50%) scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: translate(-50%, -50%) scale(1.2);
+          }
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        ::selection {
+          background: rgba(255, 255, 255, 0.1);
+          color: white;
+        }
+
+        ::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: #000000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.2);
         }
       `}</style>
     </div>
