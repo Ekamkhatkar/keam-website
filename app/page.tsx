@@ -11,57 +11,51 @@ export default function Home() {
 
   return (
     <div style={{
-      background: `
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.3), transparent),
-        radial-gradient(ellipse 50% 80% at -20% 50%, rgba(120, 119, 198, 0.15), transparent),
-        radial-gradient(ellipse 50% 80% at 120% 50%, rgba(120, 119, 198, 0.15), transparent),
-        #000000
-      `,
+      background: '#000000',
       color: '#ffffff',
       minHeight: '100vh',
       position: 'relative',
       overflow: 'hidden',
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      {/* Animated Gradient Orbs */}
+      {/* Animated Gradient Background */}
       <div style={{
         position: 'absolute',
-        top: '10%',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        background: `
+          radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.15) 0%, transparent 50%)
+        `,
+        animation: 'gradientShift 8s ease infinite'
+      }} />
+
+      {/* Moving Orbs */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
         left: '10%',
-        width: '500px',
-        height: '500px',
-        background: 'radial-gradient(circle, rgba(120, 119, 198, 0.15) 0%, transparent 70%)',
+        width: '400px',
+        height: '400px',
+        background: 'radial-gradient(circle, rgba(120, 119, 198, 0.2) 0%, transparent 70%)',
         borderRadius: '50%',
-        animation: 'float 15s ease-in-out infinite',
-        filter: 'blur(40px)',
-        opacity: 0.7
+        animation: 'orbFloat 15s ease-in-out infinite',
+        filter: 'blur(60px)'
       }} />
       
       <div style={{
         position: 'absolute',
-        bottom: '20%',
-        right: '10%',
-        width: '400px',
-        height: '400px',
-        background: 'radial-gradient(circle, rgba(120, 119, 198, 0.1) 0%, transparent 70%)',
+        bottom: '30%',
+        right: '15%',
+        width: '300px',
+        height: '300px',
+        background: 'radial-gradient(circle, rgba(120, 119, 198, 0.15) 0%, transparent 70%)',
         borderRadius: '50%',
-        animation: 'float 20s ease-in-out infinite reverse',
-        filter: 'blur(60px)',
-        opacity: 0.5
-      }} />
-
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        width: '600px',
-        height: '600px',
-        background: 'radial-gradient(circle, rgba(120, 119, 198, 0.08) 0%, transparent 70%)',
-        borderRadius: '50%',
-        animation: 'pulse 12s ease-in-out infinite',
-        filter: 'blur(80px)',
-        opacity: 0.4,
-        transform: 'translate(-50%, -50%)'
+        animation: 'orbFloat 12s ease-in-out infinite reverse',
+        filter: 'blur(50px)'
       }} />
 
       {/* Glassmorphic Header */}
