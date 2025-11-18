@@ -108,7 +108,7 @@ export default function Home() {
           gap: '2.5rem',
           alignItems: 'center'
         }}>
-          {['Work', 'Prices', 'Contact'].map((item, idx) => (
+          {['Work', 'Prices'].map((item, idx) => (
             <a key={idx} href={item === 'Work' ? '/work' : item === 'Prices' ? '/prices' : '#'} style={{
               color: 'rgba(255, 255, 255, 0.7)',
               textDecoration: 'none',
