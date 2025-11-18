@@ -11,40 +11,57 @@ export default function Home() {
 
   return (
     <div style={{
-      background: '#000000',
+      background: `
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.3), transparent),
+        radial-gradient(ellipse 50% 80% at -20% 50%, rgba(120, 119, 198, 0.15), transparent),
+        radial-gradient(ellipse 50% 80% at 120% 50%, rgba(120, 119, 198, 0.15), transparent),
+        #000000
+      `,
       color: '#ffffff',
       minHeight: '100vh',
       position: 'relative',
       overflow: 'hidden',
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      {/* Animated Smoke/Fluid Background */}
+      {/* Animated Gradient Orbs */}
       <div style={{
         position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        background: `
-          radial-gradient(ellipse at 20% 20%, rgba(204, 204, 204, 0.15) 0%, transparent 50%),
-          radial-gradient(ellipse at 80% 80%, rgba(153, 153, 153, 0.1) 0%, transparent 50%),
-          radial-gradient(ellipse at 40% 40%, rgba(102, 102, 102, 0.08) 0%, transparent 50%),
-          radial-gradient(ellipse at 60% 60%, rgba(128, 128, 128, 0.12) 0%, transparent 50%)
-        `,
-        animation: 'smokeFlow 20s ease-in-out infinite alternate'
+        top: '10%',
+        left: '10%',
+        width: '500px',
+        height: '500px',
+        background: 'radial-gradient(circle, rgba(120, 119, 198, 0.15) 0%, transparent 70%)',
+        borderRadius: '50%',
+        animation: 'float 15s ease-in-out infinite',
+        filter: 'blur(40px)',
+        opacity: 0.7
       }} />
+      
       <div style={{
         position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        background: `
-          radial-gradient(ellipse at 70% 30%, rgba(179, 179, 179, 0.1) 0%, transparent 50%),
-          radial-gradient(ellipse at 30% 70%, rgba(140, 140, 140, 0.07) 0%, transparent 50%),
-          radial-gradient(ellipse at 90% 50%, rgba(115, 115, 115, 0.05) 0%, transparent 50%)
-        `,
-        animation: 'smokeFlow 25s ease-in-out infinite alternate-reverse'
+        bottom: '20%',
+        right: '10%',
+        width: '400px',
+        height: '400px',
+        background: 'radial-gradient(circle, rgba(120, 119, 198, 0.1) 0%, transparent 70%)',
+        borderRadius: '50%',
+        animation: 'float 20s ease-in-out infinite reverse',
+        filter: 'blur(60px)',
+        opacity: 0.5
+      }} />
+
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        width: '600px',
+        height: '600px',
+        background: 'radial-gradient(circle, rgba(120, 119, 198, 0.08) 0%, transparent 70%)',
+        borderRadius: '50%',
+        animation: 'pulse 12s ease-in-out infinite',
+        filter: 'blur(80px)',
+        opacity: 0.4,
+        transform: 'translate(-50%, -50%)'
       }} />
 
       {/* Glassmorphic Header */}
@@ -52,7 +69,7 @@ export default function Home() {
         position: 'fixed',
         top: 0,
         width: '100%',
-        background: 'rgba(0, 0, 0, 0.7)',
+        background: 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(20px)',
         borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         padding: '1.5rem 0',
@@ -62,7 +79,10 @@ export default function Home() {
           <div style={{
             fontSize: '1.5rem',
             fontWeight: 'bold',
-            color: '#ffffff'
+            color: '#ffffff',
+            background: 'linear-gradient(135deg, #ffffff, #a8a8a8)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
           }}>
             KeamVisuals
           </div>
@@ -76,10 +96,17 @@ export default function Home() {
                 fontWeight: '500',
                 transition: 'all 0.3s ease',
                 padding: '0.5rem 1rem',
-                borderRadius: '8px'
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.05)'
               }}
-              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
-              onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
               >
                 Home
               </a>
@@ -90,10 +117,17 @@ export default function Home() {
                 fontWeight: '500',
                 transition: 'all 0.3s ease',
                 padding: '0.5rem 1rem',
-                borderRadius: '8px'
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.05)'
               }}
-              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
-              onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
               >
                 Work
               </a>
@@ -104,10 +138,17 @@ export default function Home() {
                 fontWeight: '500',
                 transition: 'all 0.3s ease',
                 padding: '0.5rem 1rem',
-                borderRadius: '8px'
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.05)'
               }}
-              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
-              onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
               >
                 Prices
               </a>
@@ -119,10 +160,17 @@ export default function Home() {
                   fontWeight: '500',
                   transition: 'all 0.3s ease',
                   padding: '0.5rem 1rem',
-                  borderRadius: '8px'
+                  borderRadius: '8px',
+                  background: 'rgba(255, 255, 255, 0.05)'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
-                onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                }}
                 >
                   Login
                 </a>
@@ -135,30 +183,39 @@ export default function Home() {
                   onClick={() => setIsOpen(!isOpen)}
                   style={{
                     background: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     borderRadius: '12px',
-                    padding: '0.75rem 1rem',
+                    padding: '0.75rem 1.5rem',
                     color: 'white',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
                     transition: 'all 0.3s ease',
-                    backdropFilter: 'blur(10px)'
+                    backdropFilter: 'blur(10px)',
+                    fontSize: '0.9rem',
+                    fontWeight: '500'
                   }}
-                  onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
-                  onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
                 >
                   <div style={{
                     width: '32px',
                     height: '32px',
                     borderRadius: '50%',
-                    background: 'rgba(255, 255, 255, 0.2)',
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontWeight: 'bold',
-                    fontSize: '14px'
+                    fontSize: '14px',
+                    border: '1px solid rgba(255, 255, 255, 0.3)'
                   }}>
                     {user.email?.charAt(0).toUpperCase()}
                   </div>
@@ -171,14 +228,14 @@ export default function Home() {
                     top: '100%',
                     right: 0,
                     marginTop: '8px',
-                    background: 'rgba(0, 0, 0, 0.9)',
+                    background: 'rgba(0, 0, 0, 0.8)',
                     border: '1px solid rgba(255, 255, 255, 0.2)',
                     borderRadius: '12px',
-                    padding: '0.5rem',
+                    padding: '0.75rem',
                     minWidth: '200px',
                     backdropFilter: 'blur(20px)',
                     zIndex: 1000,
-                    boxShadow: '0 20px 40px rgba(255, 255, 255, 0.1)'
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
                   }}>
                     <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
                       <p style={{ fontWeight: '600', color: 'white', fontSize: '0.9rem' }}>{user.email}</p>
@@ -192,10 +249,17 @@ export default function Home() {
                         textDecoration: 'none',
                         borderRadius: '8px',
                         fontSize: '0.9rem',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        background: 'rgba(255, 255, 255, 0.05)'
                       }}
-                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
-                      onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                        e.currentTarget.style.transform = 'translateX(5px)'
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                        e.currentTarget.style.transform = 'translateX(0)'
+                      }}
                     >
                       My Orders
                     </a>
@@ -207,17 +271,24 @@ export default function Home() {
                       style={{
                         width: '100%',
                         padding: '0.75rem 1rem',
-                        background: 'transparent',
+                        background: 'rgba(255, 255, 255, 0.05)',
                         border: 'none',
                         color: 'white',
                         textAlign: 'left',
                         cursor: 'pointer',
                         borderRadius: '8px',
                         fontSize: '0.9rem',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        marginTop: '0.5rem'
                       }}
-                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
-                      onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                        e.currentTarget.style.transform = 'translateX(5px)'
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                        e.currentTarget.style.transform = 'translateX(0)'
+                      }}
                     >
                       Sign Out
                     </button>
@@ -239,113 +310,103 @@ export default function Home() {
         position: 'relative',
         paddingTop: '80px'
       }}>
-        <div style={{position: 'relative', zIndex: 2}}>
+        <div style={{position: 'relative', zIndex: 2, maxWidth: '800px', padding: '0 2rem'}}>
           <h1 style={{
-            fontSize: '5rem',
+            fontSize: '4.5rem',
             fontWeight: 'bold',
             marginBottom: '1.5rem',
             lineHeight: '1.1',
-            color: '#ffffff'
+            background: 'linear-gradient(135deg, #ffffff, #cccccc)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            textShadow: '0 0 30px rgba(255, 255, 255, 0.2)'
           }}>
             Keam Visuals
           </h1>
           <p style={{
-            fontSize: '1.5rem', 
+            fontSize: '1.4rem', 
             color: '#cccccc', 
             marginBottom: '3rem', 
-            maxWidth: '600px', 
-            marginLeft: 'auto', 
-            marginRight: 'auto',
-            fontWeight: '400'
+            fontWeight: '400',
+            lineHeight: '1.6'
           }}>
             2 Years of Design Experience • California
           </p>
           <div style={{display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+            {/* Professional Glass Button */}
             <a href="/work" style={{
               background: 'rgba(255, 255, 255, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
               padding: '1.2rem 2.5rem',
               borderRadius: '12px',
               color: 'white',
-              fontWeight: '700',
+              fontWeight: '600',
               fontSize: '1.1rem',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
               textDecoration: 'none',
-              display: 'inline-block',
-              backdropFilter: 'blur(10px)'
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
               e.currentTarget.style.transform = 'translateY(-3px)'
-              e.currentTarget.style.boxShadow = '0 10px 30px rgba(255, 255, 255, 0.2)'
+              e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.3)'
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
               e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = 'none'
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2)'
             }}
             >
               View My Work
+              <span style={{fontSize: '1.2rem', transition: 'transform 0.3s ease'}}>→</span>
             </a>
             
-            {/* GLOWING "See Projects" BUTTON */}
+            {/* Glowing "See Projects" Button */}
             <div style={{
-              background: 'rgba(0, 0, 0, 0.8)',
-              borderRadius: '10px',
+              background: 'rgba(0, 0, 0, 0.6)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              borderRadius: '12px',
               padding: '1.2rem 2.5rem',
               position: 'relative',
               overflow: 'hidden',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.1)'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.3)'
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+              e.currentTarget.style.boxShadow = '0 0 30px rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2)'
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)'
               e.currentTarget.style.transform = 'translateY(-3px)'
+              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.7)'
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.boxShadow = 'none'
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+              e.currentTarget.style.boxShadow = '0 0 0 1px rgba(255, 255, 255, 0.1)'
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
               e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.6)'
             }}
             onClick={() => window.location.href = '/work'}
             >
-              {/* White Glow Effects */}
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '100%',
-                height: '100%',
-                background: 'radial-gradient(50% 50%, rgba(163, 163, 163, 0.4) 0%, rgba(0, 0, 0, 0) 100%)',
-                borderRadius: '999px',
-                filter: 'blur(10px)',
-                opacity: 0.4
-              }} />
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '80%',
-                height: '80%',
-                background: 'radial-gradient(50% 50%, rgba(115, 115, 115, 0.6) 0%, rgba(0, 0, 0, 0) 100%)',
-                borderRadius: '999px',
-                filter: 'blur(10px)',
-                opacity: 1
-              }} />
-              
               <span style={{
                 color: '#ffffff',
                 fontSize: '1.1rem',
-                fontWeight: '700',
+                fontWeight: '600',
                 position: 'relative',
-                zIndex: 2
+                zIndex: 2,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem'
               }}>
                 See Projects
+                <span style={{fontSize: '1.2rem', transition: 'transform 0.3s ease'}}>↗</span>
               </span>
             </div>
           </div>
@@ -363,7 +424,9 @@ export default function Home() {
             textAlign: 'center',
             fontSize: '3rem',
             marginBottom: '1rem',
-            color: '#ffffff',
+            background: 'linear-gradient(135deg, #ffffff, #cccccc)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
             fontWeight: 'bold'
           }}>
             Featured Work
@@ -389,9 +452,9 @@ export default function Home() {
                 key={item.id} 
                 href="/work"
                 style={{
-                  background: 'rgba(0, 0, 0, 0.6)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '20px',
+                  background: 'rgba(0, 0, 0, 0.4)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '16px',
                   padding: '2rem',
                   position: 'relative',
                   overflow: 'hidden',
@@ -399,24 +462,27 @@ export default function Home() {
                   cursor: 'pointer',
                   textDecoration: 'none',
                   display: 'block',
-                  transition: 'all 0.4s ease'
+                  transition: 'all 0.4s ease',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
                   e.currentTarget.style.transform = 'translateY(-8px)'
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(255, 255, 255, 0.1)'
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)'
+                  e.currentTarget.style.background = 'rgba(0, 0, 0, 0.5)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
                   e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = 'none'
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2)'
+                  e.currentTarget.style.background = 'rgba(0, 0, 0, 0.4)'
                 }}
               >
                 <div style={{
                   width: '100%',
                   height: '200px',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                   borderRadius: '12px',
                   marginBottom: '1.5rem',
                   display: 'flex',
@@ -425,20 +491,22 @@ export default function Home() {
                   color: 'white',
                   fontSize: '1.1rem',
                   fontWeight: '600',
-                  position: 'relative'
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}>
                   {item.title}
                   <div style={{
                     position: 'absolute',
                     bottom: '1rem',
                     right: '1rem',
-                    background: 'rgba(255, 255, 255, 0.2)',
+                    background: 'rgba(255, 255, 255, 0.1)',
                     color: 'white',
                     padding: '0.5rem 1rem',
                     borderRadius: '8px',
                     fontSize: '0.8rem',
                     fontWeight: '600',
-                    backdropFilter: 'blur(10px)'
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)'
                   }}>
                     {item.images.length} designs
                   </div>
@@ -475,7 +543,9 @@ export default function Home() {
           <h2 style={{
             fontSize: '3rem',
             marginBottom: '1rem',
-            color: '#ffffff',
+            background: 'linear-gradient(135deg, #ffffff, #cccccc)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
             fontWeight: 'bold'
           }}>
             Ready to Get Started?
@@ -490,37 +560,43 @@ export default function Home() {
           </p>
           <a href="/prices" style={{
             background: 'rgba(255, 255, 255, 0.1)',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
             padding: '1.4rem 3rem',
             borderRadius: '12px',
             color: 'white',
-            fontWeight: '700',
+            fontWeight: '600',
             fontSize: '1.2rem',
             cursor: 'pointer',
             transition: 'all 0.3s ease',
             textDecoration: 'none',
-            display: 'inline-block',
-            backdropFilter: 'blur(10px)'
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            backdropFilter: 'blur(10px)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
             e.currentTarget.style.transform = 'translateY(-3px)'
-            e.currentTarget.style.boxShadow = '0 10px 30px rgba(255, 255, 255, 0.2)'
+            e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.3)'
           }}
           onMouseOut={(e) => {
             e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
             e.currentTarget.style.transform = 'translateY(0)'
-            e.currentTarget.style.boxShadow = 'none'
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2)'
           }}
           >
             View All Pricing
+            <span style={{fontSize: '1.3rem', transition: 'transform 0.3s ease'}}>→</span>
           </a>
         </div>
       </section>
 
       {/* Footer */}
       <footer style={{
-        background: 'rgba(0, 0, 0, 0.8)',
+        background: 'rgba(0, 0, 0, 0.6)',
         borderTop: '1px solid rgba(255, 255, 255, 0.1)',
         padding: '3rem 0',
         textAlign: 'center',
@@ -536,18 +612,29 @@ export default function Home() {
 
       {/* CSS Animations */}
       <style jsx global>{`
-        @keyframes smokeFlow {
-          0% {
-            transform: translate(0px, 0px) scale(1);
+        @keyframes float {
+          0%, 100% { 
+            transform: translate(0px, 0px) scale(1); 
           }
-          33% {
-            transform: translate(-10px, 15px) scale(1.05);
+          25% { 
+            transform: translate(-30px, 40px) scale(1.1); 
           }
-          66% {
-            transform: translate(15px, -10px) scale(0.95);
+          50% { 
+            transform: translate(20px, -30px) scale(0.9); 
           }
-          100% {
-            transform: translate(-5px, 5px) scale(1.02);
+          75% { 
+            transform: translate(-20px, -40px) scale(1.05); 
+          }
+        }
+
+        @keyframes pulse {
+          0%, 100% { 
+            opacity: 0.3; 
+            transform: translate(-50%, -50%) scale(1);
+          }
+          50% { 
+            opacity: 0.6; 
+            transform: translate(-50%, -50%) scale(1.2);
           }
         }
       `}</style>
