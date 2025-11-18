@@ -18,7 +18,7 @@ export default function Home() {
       overflow: 'hidden',
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      {/* ULTRA SMOOTH FLUID SMOKE BACKGROUND */}
+      {/* SINGLE FAST WARPING SMOKE STRIPE */}
       <div style={{
         position: 'absolute',
         top: 0,
@@ -26,86 +26,50 @@ export default function Home() {
         width: '100%',
         height: '100%',
         overflow: 'hidden',
-        willChange: 'transform'
+        background: '#000000'
       }}>
-        {/* Giant soft smoke blobs - MUCH bigger and blurrier */}
+        {/* Main fast-moving smoke stripe */}
         <div style={{
           position: 'absolute',
-          top: '-30%',
-          left: '-20%',
+          top: '-20%',
+          left: '-50%',
           width: '200%',
-          height: '200%',
-          background: 'radial-gradient(circle at 35% 40%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 25%, transparent 60%)',
-          filter: 'blur(180px)',
-          animation: 'smokeWarp1 20s ease-in-out infinite',
-          transform: 'rotate(-15deg)',
-          willChange: 'transform'
-        }} />
-        
-        <div style={{
-          position: 'absolute',
-          top: '-10%',
-          right: '-30%',
-          width: '180%',
-          height: '180%',
-          background: 'radial-gradient(circle at 65% 35%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 30%, transparent 65%)',
-          filter: 'blur(200px)',
-          animation: 'smokeWarp2 24s ease-in-out infinite',
-          transform: 'rotate(25deg)',
-          willChange: 'transform'
-        }} />
-        
-        <div style={{
-          position: 'absolute',
-          bottom: '-20%',
-          left: '10%',
-          width: '160%',
-          height: '160%',
-          background: 'radial-gradient(circle at 50% 55%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.06) 28%, transparent 58%)',
-          filter: 'blur(160px)',
-          animation: 'smokeWarp3 28s ease-in-out infinite',
-          transform: 'rotate(10deg)',
-          willChange: 'transform'
-        }} />
-        
-        <div style={{
-          position: 'absolute',
-          top: '20%',
-          left: '30%',
-          width: '140%',
           height: '140%',
-          background: 'radial-gradient(circle at 45% 50%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 35%, transparent 62%)',
-          filter: 'blur(170px)',
-          animation: 'smokeWarp4 26s ease-in-out infinite',
-          transform: 'rotate(-20deg)',
+          background: `
+            radial-gradient(ellipse 800px 400px at 30% 30%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 20%, rgba(255, 255, 255, 0.05) 40%, transparent 60%),
+            radial-gradient(ellipse 600px 300px at 70% 60%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 25%, transparent 55%)
+          `,
+          filter: 'blur(80px)',
+          animation: 'fastSmoke 8s ease-in-out infinite',
+          transformOrigin: 'center center',
           willChange: 'transform'
         }} />
         
-        {/* Layered flowing smoke */}
+        {/* Secondary flowing element for depth */}
         <div style={{
           position: 'absolute',
-          top: '10%',
-          left: '-20%',
-          width: '200%',
-          height: '80%',
-          background: 'linear-gradient(125deg, transparent 15%, rgba(255, 255, 255, 0.08) 50%, transparent 85%)',
-          filter: 'blur(140px)',
-          animation: 'flowCurve 30s ease-in-out infinite',
-          transformOrigin: '0% 50%',
+          bottom: '-10%',
+          right: '-30%',
+          width: '150%',
+          height: '100%',
+          background: 'radial-gradient(ellipse 700px 350px at 50% 50%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 30%, transparent 60%)',
+          filter: 'blur(90px)',
+          animation: 'fastSmoke2 10s ease-in-out infinite',
+          transformOrigin: 'center center',
           willChange: 'transform'
         }} />
         
+        {/* Subtle ambient glow */}
         <div style={{
           position: 'absolute',
-          bottom: '0%',
-          right: '-25%',
-          width: '180%',
-          height: '70%',
-          background: 'linear-gradient(235deg, transparent 20%, rgba(255, 255, 255, 0.06) 55%, transparent 90%)',
-          filter: 'blur(150px)',
-          animation: 'flowCurve2 35s ease-in-out infinite',
-          transformOrigin: '100% 50%',
-          willChange: 'transform'
+          top: '50%',
+          left: '50%',
+          width: '100%',
+          height: '100%',
+          background: 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%)',
+          filter: 'blur(120px)',
+          transform: 'translate(-50%, -50%)',
+          animation: 'subtleGlow 12s ease-in-out infinite'
         }} />
       </div>
 
@@ -584,72 +548,47 @@ export default function Home() {
 
       {/* ANIMATIONS */}
       <style jsx global>{`
-        @keyframes smokeWarp1 {
-          0%, 100% {
-            transform: rotate(-15deg) translate(0, 0) scale(1);
+        @keyframes fastSmoke {
+          0% {
+            transform: translate(-30%, -10%) rotate(-20deg) scaleX(0.8) scaleY(1.2);
           }
-          33% {
-            transform: rotate(5deg) translate(60px, -80px) scale(1.2);
-          }
-          66% {
-            transform: rotate(-25deg) translate(-40px, 60px) scale(0.85);
-          }
-        }
-
-        @keyframes smokeWarp2 {
-          0%, 100% {
-            transform: rotate(25deg) translate(0, 0) scale(1);
-          }
-          40% {
-            transform: rotate(-15deg) translate(-70px, 50px) scale(1.25);
-          }
-          80% {
-            transform: rotate(35deg) translate(50px, -70px) scale(0.9);
-          }
-        }
-
-        @keyframes smokeWarp3 {
-          0%, 100% {
-            transform: rotate(10deg) translate(0, 0) scale(1);
+          25% {
+            transform: translate(10%, 15%) rotate(10deg) scaleX(1.3) scaleY(0.9);
           }
           50% {
-            transform: rotate(-30deg) translate(80px, 90px) scale(1.15);
+            transform: translate(40%, -5%) rotate(-15deg) scaleX(0.9) scaleY(1.4);
+          }
+          75% {
+            transform: translate(5%, 20%) rotate(25deg) scaleX(1.5) scaleY(0.7);
+          }
+          100% {
+            transform: translate(-30%, -10%) rotate(-20deg) scaleX(0.8) scaleY(1.2);
           }
         }
 
-        @keyframes smokeWarp4 {
-          0%, 100% {
-            transform: rotate(-20deg) translate(0, 0) scale(1);
-          }
-          45% {
-            transform: rotate(20deg) translate(-60px, 70px) scale(1.3);
-          }
-          90% {
-            transform: rotate(-35deg) translate(40, -50px) scale(0.8);
-          }
-        }
-
-        @keyframes flowCurve {
-          0%, 100% {
-            transform: translateX(0%) rotate(0deg) scaleY(1);
+        @keyframes fastSmoke2 {
+          0% {
+            transform: translate(20%, 10%) rotate(15deg) scaleX(1.2) scaleY(0.8);
           }
           33% {
-            transform: translateX(-25%) rotate(8deg) scaleY(1.3);
+            transform: translate(-15%, -20%) rotate(-25deg) scaleX(0.7) scaleY(1.5);
           }
           66% {
-            transform: translateX(-50%) rotate(-5deg) scaleY(0.85);
+            transform: translate(30%, 5%) rotate(20deg) scaleX(1.4) scaleY(0.9);
+          }
+          100% {
+            transform: translate(20%, 10%) rotate(15deg) scaleX(1.2) scaleY(0.8);
           }
         }
 
-        @keyframes flowCurve2 {
+        @keyframes subtleGlow {
           0%, 100% {
-            transform: translateX(0%) rotate(0deg) scaleY(1);
+            opacity: 0.3;
+            transform: translate(-50%, -50%) scale(1);
           }
-          40% {
-            transform: translateX(30%) rotate(-10deg) scaleY(1.25);
-          }
-          80% {
-            transform: translateX(60%) rotate(7deg) scaleY(0.9);
+          50% {
+            opacity: 0.5;
+            transform: translate(-50%, -50%) scale(1.2);
           }
         }
 
