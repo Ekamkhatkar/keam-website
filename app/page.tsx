@@ -18,75 +18,94 @@ export default function Home() {
       overflow: 'hidden',
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      {/* FLUID ANIMATED SMOKE BACKGROUND */}
+      {/* ULTRA SMOOTH FLUID SMOKE BACKGROUND */}
       <div style={{
         position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        willChange: 'transform'
       }}>
-        {/* Multiple morphing smoke layers */}
+        {/* Giant soft smoke blobs - MUCH bigger and blurrier */}
         <div style={{
           position: 'absolute',
-          top: '-20%',
-          left: '-10%',
-          width: '120%',
-          height: '140%',
-          background: 'radial-gradient(ellipse at 30% 40%, rgba(255, 255, 255, 0.15) 0%, transparent 50%)',
-          filter: 'blur(100px)',
-          animation: 'smokeWarp1 15s ease-in-out infinite',
-          transform: 'rotate(-15deg)'
+          top: '-30%',
+          left: '-20%',
+          width: '200%',
+          height: '200%',
+          background: 'radial-gradient(circle at 35% 40%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 25%, transparent 60%)',
+          filter: 'blur(180px)',
+          animation: 'smokeWarp1 20s ease-in-out infinite',
+          transform: 'rotate(-15deg)',
+          willChange: 'transform'
         }} />
         
         <div style={{
           position: 'absolute',
-          top: '10%',
-          right: '-15%',
-          width: '100%',
-          height: '120%',
-          background: 'radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.12) 0%, transparent 60%)',
-          filter: 'blur(120px)',
-          animation: 'smokeWarp2 18s ease-in-out infinite',
-          transform: 'rotate(25deg)'
+          top: '-10%',
+          right: '-30%',
+          width: '180%',
+          height: '180%',
+          background: 'radial-gradient(circle at 65% 35%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 30%, transparent 65%)',
+          filter: 'blur(200px)',
+          animation: 'smokeWarp2 24s ease-in-out infinite',
+          transform: 'rotate(25deg)',
+          willChange: 'transform'
         }} />
         
         <div style={{
           position: 'absolute',
-          bottom: '-10%',
-          left: '20%',
-          width: '90%',
-          height: '100%',
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 55%)',
-          filter: 'blur(90px)',
-          animation: 'smokeWarp3 20s ease-in-out infinite',
-          transform: 'rotate(10deg)'
+          bottom: '-20%',
+          left: '10%',
+          width: '160%',
+          height: '160%',
+          background: 'radial-gradient(circle at 50% 55%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.06) 28%, transparent 58%)',
+          filter: 'blur(160px)',
+          animation: 'smokeWarp3 28s ease-in-out infinite',
+          transform: 'rotate(10deg)',
+          willChange: 'transform'
         }} />
         
-        <div style={{
-          position: 'absolute',
-          top: '30%',
-          left: '50%',
-          width: '80%',
-          height: '80%',
-          background: 'radial-gradient(ellipse at 40% 60%, rgba(255, 255, 255, 0.08) 0%, transparent 50%)',
-          filter: 'blur(110px)',
-          animation: 'smokeWarp4 22s ease-in-out infinite',
-          transform: 'translate(-50%, -50%) rotate(-20deg)'
-        }} />
-        
-        {/* Flowing curves */}
         <div style={{
           position: 'absolute',
           top: '20%',
-          left: '0',
-          width: '150%',
-          height: '60%',
-          background: 'linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.06) 50%, transparent 80%)',
-          filter: 'blur(80px)',
-          animation: 'flowCurve 25s ease-in-out infinite',
-          transformOrigin: '0% 50%'
+          left: '30%',
+          width: '140%',
+          height: '140%',
+          background: 'radial-gradient(circle at 45% 50%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 35%, transparent 62%)',
+          filter: 'blur(170px)',
+          animation: 'smokeWarp4 26s ease-in-out infinite',
+          transform: 'rotate(-20deg)',
+          willChange: 'transform'
+        }} />
+        
+        {/* Layered flowing smoke */}
+        <div style={{
+          position: 'absolute',
+          top: '10%',
+          left: '-20%',
+          width: '200%',
+          height: '80%',
+          background: 'linear-gradient(125deg, transparent 15%, rgba(255, 255, 255, 0.08) 50%, transparent 85%)',
+          filter: 'blur(140px)',
+          animation: 'flowCurve 30s ease-in-out infinite',
+          transformOrigin: '0% 50%',
+          willChange: 'transform'
+        }} />
+        
+        <div style={{
+          position: 'absolute',
+          bottom: '0%',
+          right: '-25%',
+          width: '180%',
+          height: '70%',
+          background: 'linear-gradient(235deg, transparent 20%, rgba(255, 255, 255, 0.06) 55%, transparent 90%)',
+          filter: 'blur(150px)',
+          animation: 'flowCurve2 35s ease-in-out infinite',
+          transformOrigin: '100% 50%',
+          willChange: 'transform'
         }} />
       </div>
 
@@ -565,15 +584,72 @@ export default function Home() {
 
       {/* ANIMATIONS */}
       <style jsx global>{`
-        @keyframes blobMove {
+        @keyframes smokeWarp1 {
           0%, 100% {
-            transform: translate(0, 0) scale(1);
+            transform: rotate(-15deg) translate(0, 0) scale(1);
           }
           33% {
-            transform: translate(30px, -30px) scale(1.1);
+            transform: rotate(5deg) translate(60px, -80px) scale(1.2);
           }
           66% {
-            transform: translate(-20px, 20px) scale(0.9);
+            transform: rotate(-25deg) translate(-40px, 60px) scale(0.85);
+          }
+        }
+
+        @keyframes smokeWarp2 {
+          0%, 100% {
+            transform: rotate(25deg) translate(0, 0) scale(1);
+          }
+          40% {
+            transform: rotate(-15deg) translate(-70px, 50px) scale(1.25);
+          }
+          80% {
+            transform: rotate(35deg) translate(50px, -70px) scale(0.9);
+          }
+        }
+
+        @keyframes smokeWarp3 {
+          0%, 100% {
+            transform: rotate(10deg) translate(0, 0) scale(1);
+          }
+          50% {
+            transform: rotate(-30deg) translate(80px, 90px) scale(1.15);
+          }
+        }
+
+        @keyframes smokeWarp4 {
+          0%, 100% {
+            transform: rotate(-20deg) translate(0, 0) scale(1);
+          }
+          45% {
+            transform: rotate(20deg) translate(-60px, 70px) scale(1.3);
+          }
+          90% {
+            transform: rotate(-35deg) translate(40, -50px) scale(0.8);
+          }
+        }
+
+        @keyframes flowCurve {
+          0%, 100% {
+            transform: translateX(0%) rotate(0deg) scaleY(1);
+          }
+          33% {
+            transform: translateX(-25%) rotate(8deg) scaleY(1.3);
+          }
+          66% {
+            transform: translateX(-50%) rotate(-5deg) scaleY(0.85);
+          }
+        }
+
+        @keyframes flowCurve2 {
+          0%, 100% {
+            transform: translateX(0%) rotate(0deg) scaleY(1);
+          }
+          40% {
+            transform: translateX(30%) rotate(-10deg) scaleY(1.25);
+          }
+          80% {
+            transform: translateX(60%) rotate(7deg) scaleY(0.9);
           }
         }
 
