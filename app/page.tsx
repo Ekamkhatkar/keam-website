@@ -18,30 +18,77 @@ export default function Home() {
       overflow: 'hidden',
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      {/* MASSIVE BLURRED GRADIENT BLOB */}
+      {/* FLUID ANIMATED SMOKE BACKGROUND */}
       <div style={{
         position: 'absolute',
-        top: '15%',
-        left: '30%',
-        width: '800px',
-        height: '800px',
-        background: 'radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%)',
-        borderRadius: '50%',
-        filter: 'blur(120px)',
-        animation: 'blobMove 25s ease-in-out infinite'
-      }} />
-      
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        right: '20%',
-        width: '600px',
-        height: '600px',
-        background: 'radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%)',
-        borderRadius: '50%',
-        filter: 'blur(100px)',
-        animation: 'blobMove 30s ease-in-out infinite reverse'
-      }} />
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden'
+      }}>
+        {/* Multiple morphing smoke layers */}
+        <div style={{
+          position: 'absolute',
+          top: '-20%',
+          left: '-10%',
+          width: '120%',
+          height: '140%',
+          background: 'radial-gradient(ellipse at 30% 40%, rgba(255, 255, 255, 0.15) 0%, transparent 50%)',
+          filter: 'blur(100px)',
+          animation: 'smokeWarp1 15s ease-in-out infinite',
+          transform: 'rotate(-15deg)'
+        }} />
+        
+        <div style={{
+          position: 'absolute',
+          top: '10%',
+          right: '-15%',
+          width: '100%',
+          height: '120%',
+          background: 'radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.12) 0%, transparent 60%)',
+          filter: 'blur(120px)',
+          animation: 'smokeWarp2 18s ease-in-out infinite',
+          transform: 'rotate(25deg)'
+        }} />
+        
+        <div style={{
+          position: 'absolute',
+          bottom: '-10%',
+          left: '20%',
+          width: '90%',
+          height: '100%',
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 55%)',
+          filter: 'blur(90px)',
+          animation: 'smokeWarp3 20s ease-in-out infinite',
+          transform: 'rotate(10deg)'
+        }} />
+        
+        <div style={{
+          position: 'absolute',
+          top: '30%',
+          left: '50%',
+          width: '80%',
+          height: '80%',
+          background: 'radial-gradient(ellipse at 40% 60%, rgba(255, 255, 255, 0.08) 0%, transparent 50%)',
+          filter: 'blur(110px)',
+          animation: 'smokeWarp4 22s ease-in-out infinite',
+          transform: 'translate(-50%, -50%) rotate(-20deg)'
+        }} />
+        
+        {/* Flowing curves */}
+        <div style={{
+          position: 'absolute',
+          top: '20%',
+          left: '0',
+          width: '150%',
+          height: '60%',
+          background: 'linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.06) 50%, transparent 80%)',
+          filter: 'blur(80px)',
+          animation: 'flowCurve 25s ease-in-out infinite',
+          transformOrigin: '0% 50%'
+        }} />
+      </div>
 
       {/* MINIMAL HEADER */}
       <header style={{
