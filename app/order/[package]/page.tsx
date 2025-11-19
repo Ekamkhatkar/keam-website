@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { useAuth } from '../../../contexts/AuthContext'
-import { supabase } from '../../../lib/supabase'
+import { useAuth } from '@/contexts/AuthContext'
+import { supabase } from '@/lib/supabase'
 
 const packages = {
   'discord-package': { name: 'Discord Package', price: 20 },
@@ -32,17 +32,11 @@ export default function OrderForm() {
   const [orderCreated, setOrderCreated] = useState(false)
   const [currentOrderId, setCurrentOrderId] = useState<string>('')
   const [paypalLoading, setPaypalLoading] = useState(false)
-  console.log('🟡 Customer - OrderForm loaded')
-  console.log('🟡 Customer - Supabase URL from .env:', process.env.NEXT_PUBLIC_SUPABASE_URL)
 
   useEffect(() => {
-    // Load PayPal script
     const script = document.createElement('script')
     script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID}&currency=USD`
     script.async = true
-    script.onload = () => {
-      console.log('PayPal SDK loaded')
-    }
     document.body.appendChild(script)
 
     return () => {
@@ -67,12 +61,6 @@ export default function OrderForm() {
     setLoading(true)
 
     try {
-      console.log('🟡 Creating order...')
-      console.log('User ID:', user.id)
-      console.log('Package:', packageInfo)
-      console.log('Form data:', formData)
-
-      // 1. Create order in database
       const { data: order, error } = await supabase
         .from('keam_visuals')
         .insert([{
@@ -86,17 +74,12 @@ export default function OrderForm() {
         .select()
         .single()
 
-      if (error) {
-        console.error('🔴 Database error:', error)
-        throw error
-      }
+      if (error) throw error
 
-      console.log('🟢 Order created:', order)
       setCurrentOrderId(order.id)
       setOrderCreated(true)
 
     } catch (error: any) {
-      console.error('🔴 Order creation error:', error)
       alert('Error creating order: ' + (error.message || 'Unknown error'))
     } finally {
       setLoading(false)
@@ -112,7 +95,6 @@ export default function OrderForm() {
     setPaypalLoading(true)
     
     try {
-      // Create PayPal order
       const response = await fetch('/api/paypal/create-order', {
         method: 'POST',
         headers: {
@@ -132,13 +114,11 @@ export default function OrderForm() {
       }
 
       if (data.approval_url) {
-        // Redirect to PayPal
         window.location.href = data.approval_url
       } else {
         throw new Error('No PayPal approval URL received')
       }
     } catch (error: any) {
-      console.error('🔴 PayPal error:', error)
       alert('Payment setup failed: ' + error.message)
     } finally {
       setPaypalLoading(false)
@@ -153,292 +133,489 @@ export default function OrderForm() {
   }
 
   return (
-    <div style={{minHeight: '100vh', background: '#000000', color: 'white', paddingTop: '80px'}}>
-      <div style={{maxWidth: '800px', margin: '0 auto', padding: '2rem 1rem'}}>
+    <div style={{
+      background: '#000000',
+      color: '#ffffff',
+      minHeight: '100vh',
+      position: 'relative',
+      overflow: 'hidden',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    }}>
+      
+      {/* BACKGROUND SMOKE EFFECTS */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+        background: '#000000'
+      }}>
+        <div style={{
+          position: 'absolute',
+          top: '-20%',
+          left: '-50%',
+          width: '200%',
+          height: '140%',
+          background: `
+            radial-gradient(ellipse 800px 400px at 30% 30%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 20%, rgba(255, 255, 255, 0.05) 40%, transparent 60%),
+            radial-gradient(ellipse 600px 300px at 70% 60%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 25%, transparent 55%)
+          `,
+          filter: 'blur(80px)',
+          animation: 'fastSmoke 8s ease-in-out infinite',
+          transformOrigin: 'center center'
+        }} />
         
-        <div style={{textAlign: 'center', marginBottom: '3rem'}}>
-          <h1 style={{
-            fontSize: '3rem',
-            fontWeight: 'bold',
-            background: 'linear-gradient(135deg, #adadadff, #222222ff)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            marginBottom: '0.5rem'
-          }}>
-            Order {packageInfo.name}
-          </h1>
-          <p style={{color: '#9ca3af', fontSize: '1.5rem', fontWeight: '600'}}>
-            ${packageInfo.price}
-          </p>
-        </div>
+        <div style={{
+          position: 'absolute',
+          bottom: '-10%',
+          right: '-30%',
+          width: '150%',
+          height: '100%',
+          background: 'radial-gradient(ellipse 700px 350px at 50% 50%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 30%, transparent 60%)',
+          filter: 'blur(90px)',
+          animation: 'fastSmoke2 10s ease-in-out infinite',
+          transformOrigin: 'center center'
+        }} />
+      </div>
 
-        <div className="glow-card" style={{
-          background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '16px',
-          padding: '2rem'
-        }}>
-          {!orderCreated ? (
-            <form onSubmit={handleSubmit}>
-              <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
-                
-                {/* Design Style */}
-                <div>
-                  <label style={{
-                    display: 'block',
-                    color: 'white',
-                    marginBottom: '0.5rem',
-                    fontWeight: '600'
-                  }}>
-                    Design Style *
-                  </label>
-                  <select
-                    name="designStyle"
-                    value={formData.designStyle}
-                    onChange={handleInputChange}
-                    required
+      {/* MAIN CONTENT */}
+      <div style={{ position: 'relative', zIndex: 100, paddingTop: '100px' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 2rem' }}>
+          
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '50px',
+              padding: '0.5rem 1.25rem',
+              marginBottom: '1.5rem',
+              fontSize: '0.875rem',
+              color: 'rgba(255, 255, 255, 0.8)',
+              fontWeight: '400'
+            }}>
+              <div style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: '#ffffff'
+              }} />
+              Order Form
+            </div>
+
+            <h1 style={{
+              fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+              fontWeight: '300',
+              marginBottom: '0.5rem',
+              letterSpacing: '-0.02em'
+            }}>
+              {packageInfo.name}
+            </h1>
+            <p style={{
+              fontSize: '1.5rem',
+              color: 'rgba(255, 255, 255, 0.6)',
+              fontWeight: '400'
+            }}>
+              ${packageInfo.price}
+            </p>
+          </div>
+
+          {/* Order Form */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.02)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '20px',
+            padding: '3rem',
+            backdropFilter: 'blur(10px)'
+          }}>
+            {!orderCreated ? (
+              <form onSubmit={handleSubmit}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                  
+                  {/* Design Style - FIXED DROPDOWN */}
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      marginBottom: '0.75rem',
+                      fontSize: '0.9rem',
+                      fontWeight: '400'
+                    }}>
+                      Design Style *
+                    </label>
+                    <select
+                      name="designStyle"
+                      value={formData.designStyle}
+                      onChange={handleInputChange}
+                      required
+                      style={{
+                        width: '100%',
+                        padding: '0.875rem 1rem',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        borderRadius: '10px',
+                        color: 'white',
+                        fontSize: '0.95rem',
+                        transition: 'all 0.3s ease',
+                        appearance: 'none',
+                        backgroundImage: `url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23ffffff' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 1rem center',
+                        backgroundSize: '12px'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                      }}
+                    >
+                      <option value="" style={{ background: '#000000', color: 'white' }}>Select a style</option>
+                      <option value="modern" style={{ background: '#000000', color: 'white' }}>Modern & Clean</option>
+                      <option value="vibrant" style={{ background: '#000000', color: 'white' }}>Vibrant & Colorful</option>
+                      <option value="minimal" style={{ background: '#000000', color: 'white' }}>Minimalist</option>
+                      <option value="gaming" style={{ background: '#000000', color: 'white' }}>Gaming Theme</option>
+                      <option value="elegant" style={{ background: '#000000', color: 'white' }}>Elegant & Professional</option>
+                      <option value="custom" style={{ background: '#000000', color: 'white' }}>Custom (describe below)</option>
+                    </select>
+                  </div>
+
+                  {/* Color Preferences */}
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      marginBottom: '0.75rem',
+                      fontSize: '0.9rem',
+                      fontWeight: '400'
+                    }}>
+                      Color Preferences
+                    </label>
+                    <input
+                      type="text"
+                      name="colorPreferences"
+                      value={formData.colorPreferences}
+                      onChange={handleInputChange}
+                      placeholder="e.g., Blue and purple, brand colors, etc."
+                      style={{
+                        width: '100%',
+                        padding: '0.875rem 1rem',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        borderRadius: '10px',
+                        color: 'white',
+                        fontSize: '0.95rem',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                      }}
+                    />
+                  </div>
+
+                  {/* Specific Requirements */}
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      marginBottom: '0.75rem',
+                      fontSize: '0.9rem',
+                      fontWeight: '400'
+                    }}>
+                      Specific Requirements *
+                    </label>
+                    <textarea
+                      name="specificRequirements"
+                      value={formData.specificRequirements}
+                      onChange={handleInputChange}
+                      required
+                      rows={4}
+                      placeholder="Describe exactly what you need..."
+                      style={{
+                        width: '100%',
+                        padding: '0.875rem 1rem',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        borderRadius: '10px',
+                        color: 'white',
+                        fontSize: '0.95rem',
+                        resize: 'vertical',
+                        transition: 'all 0.3s ease',
+                        fontFamily: 'inherit'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                      }}
+                    />
+                  </div>
+
+                  {/* References */}
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      marginBottom: '0.75rem',
+                      fontSize: '0.9rem',
+                      fontWeight: '400'
+                    }}>
+                      Reference Links/Images
+                    </label>
+                    <textarea
+                      name="references"
+                      value={formData.references}
+                      onChange={handleInputChange}
+                      rows={3}
+                      placeholder="Paste links to designs you like..."
+                      style={{
+                        width: '100%',
+                        padding: '0.875rem 1rem',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        borderRadius: '10px',
+                        color: 'white',
+                        fontSize: '0.95rem',
+                        resize: 'vertical',
+                        transition: 'all 0.3s ease',
+                        fontFamily: 'inherit'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                      }}
+                    />
+                  </div>
+
+                  {/* Deadline */}
+                  <div>
+                    <label style={{
+                      display: 'block',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      marginBottom: '0.75rem',
+                      fontSize: '0.9rem',
+                      fontWeight: '400'
+                    }}>
+                      Desired Deadline
+                    </label>
+                    <input
+                      type="date"
+                      name="deadline"
+                      value={formData.deadline}
+                      onChange={handleInputChange}
+                      style={{
+                        width: '100%',
+                        padding: '0.875rem 1rem',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        borderRadius: '10px',
+                        color: 'white',
+                        fontSize: '0.95rem',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                      }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
                     style={{
                       width: '100%',
-                      padding: '0.75rem',
-                      background: 'rgba(255, 255, 255, 0.1)',
+                      background: 'transparent',
                       border: '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '1rem'
+                      color: '#ffffff',
+                      padding: '0.875rem 2rem',
+                      borderRadius: '10px',
+                      fontSize: '0.95rem',
+                      fontWeight: '400',
+                      cursor: loading ? 'not-allowed' : 'pointer',
+                      opacity: loading ? 0.6 : 1,
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseOver={(e) => {
+                      if (!loading) {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
+                      }
+                    }}
+                    onMouseOut={(e) => {
+                      if (!loading) {
+                        e.currentTarget.style.background = 'transparent'
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                      }
                     }}
                   >
-                    <option value="">Select a style</option>
-                    <option value="modern">Modern & Clean</option>
-                    <option value="vibrant">Vibrant & Colorful</option>
-                    <option value="minimal">Minimalist</option>
-                    <option value="gaming">Gaming Theme</option>
-                    <option value="elegant">Elegant & Professional</option>
-                    <option value="custom">Custom (describe below)</option>
-                  </select>
+                    {loading ? 'Creating Order...' : `Continue to Payment - $${packageInfo.price}`}
+                  </button>
                 </div>
-
-                {/* Color Preferences */}
-                <div>
-                  <label style={{
-                    display: 'block',
+              </form>
+            ) : (
+              <div style={{ textAlign: 'center' }}>
+                <div style={{
+                  background: 'rgba(34, 197, 94, 0.1)',
+                  border: '1px solid rgba(34, 197, 94, 0.2)',
+                  borderRadius: '16px',
+                  padding: '2rem',
+                  marginBottom: '2rem'
+                }}>
+                  <h3 style={{
                     color: 'white',
-                    marginBottom: '0.5rem',
-                    fontWeight: '600'
+                    fontSize: '1.5rem',
+                    fontWeight: '400',
+                    marginBottom: '1rem'
                   }}>
-                    Color Preferences
-                  </label>
-                  <input
-                    type="text"
-                    name="colorPreferences"
-                    value={formData.colorPreferences}
-                    onChange={handleInputChange}
-                    placeholder="e.g., Blue and purple, brand colors, etc."
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '1rem'
-                    }}
-                  />
-                </div>
-
-                {/* Specific Requirements */}
-                <div>
-                  <label style={{
-                    display: 'block',
-                    color: 'white',
-                    marginBottom: '0.5rem',
-                    fontWeight: '600'
-                  }}>
-                    Specific Requirements *
-                  </label>
-                  <textarea
-                    name="specificRequirements"
-                    value={formData.specificRequirements}
-                    onChange={handleInputChange}
-                    required
-                    rows={4}
-                    placeholder="Describe exactly what you need..."
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '1rem',
-                      resize: 'vertical'
-                    }}
-                  />
-                </div>
-
-                {/* References */}
-                <div>
-                  <label style={{
-                    display: 'block',
-                    color: 'white',
-                    marginBottom: '0.5rem',
-                    fontWeight: '600'
-                  }}>
-                    Reference Links/Images
-                  </label>
-                  <textarea
-                    name="references"
-                    value={formData.references}
-                    onChange={handleInputChange}
-                    rows={3}
-                    placeholder="Paste links to designs you like..."
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '1rem',
-                      resize: 'vertical'
-                    }}
-                  />
-                </div>
-
-                {/* Deadline */}
-                <div>
-                  <label style={{
-                    display: 'block',
-                    color: 'white',
-                    marginBottom: '0.5rem',
-                    fontWeight: '600'
-                  }}>
-                    Desired Deadline
-                  </label>
-                  <input
-                    type="date"
-                    name="deadline"
-                    value={formData.deadline}
-                    onChange={handleInputChange}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '1rem'
-                    }}
-                  />
+                    Order Created Successfully!
+                  </h3>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
+                    Order ID: {currentOrderId}
+                  </p>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                    Complete your payment to start your project
+                  </p>
                 </div>
 
                 <button
-                  type="submit"
-                  disabled={loading}
+                  onClick={handlePayment}
+                  disabled={paypalLoading}
                   style={{
                     width: '100%',
-                    background: 'linear-gradient(135deg, #949494ff, #383838ff)',
-                    color: 'white',
-                    padding: '1rem 2rem',
-                    border: 'none',
-                    borderRadius: '12px',
-                    fontSize: '1.1rem',
-                    fontWeight: '600',
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                    opacity: loading ? 0.7 : 1,
-                    transition: 'all 0.3s ease'
+                    background: 'transparent',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    color: '#ffffff',
+                    padding: '0.875rem 2rem',
+                    borderRadius: '10px',
+                    fontSize: '0.95rem',
+                    fontWeight: '400',
+                    cursor: paypalLoading ? 'not-allowed' : 'pointer',
+                    opacity: paypalLoading ? 0.6 : 1,
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem'
+                  }}
+                  onMouseOver={(e) => {
+                    if (!paypalLoading) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
+                    }
+                  }}
+                  onMouseOut={(e) => {
+                    if (!paypalLoading) {
+                      e.currentTarget.style.background = 'transparent'
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                    }
                   }}
                 >
-                  {loading ? 'Creating Order...' : `Continue to Payment - $${packageInfo.price}`}
+                  {paypalLoading ? (
+                    <>
+                      <div className="spinner"></div>
+                      Redirecting to PayPal...
+                    </>
+                  ) : (
+                    <>
+                      Pay with PayPal - ${packageInfo.price}
+                    </>
+                  )}
                 </button>
-              </div>
-            </form>
-          ) : (
-            <div style={{textAlign: 'center'}}>
-              <div style={{
-                background: 'rgba(34, 197, 94, 0.1)',
-                border: '1px solid rgba(34, 197, 94, 0.3)',
-                borderRadius: '12px',
-                padding: '2rem',
-                marginBottom: '2rem'
-              }}>
-                <h3 style={{
-                  color: 'white',
-                  fontSize: '1.5rem',
-                  fontWeight: '600',
-                  marginBottom: '1rem'
+
+                <p style={{
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  fontSize: '0.875rem',
+                  marginTop: '1rem'
                 }}>
-                  Order Created Successfully!
-                </h3>
-                <p style={{color: '#9ca3af', marginBottom: '0.5rem'}}>
-                  Order ID: {currentOrderId}
-                </p>
-                <p style={{color: '#9ca3af'}}>
-                  Complete your payment to start your project
+                  You'll be redirected to PayPal to complete your payment
                 </p>
               </div>
-
-              <button
-                onClick={handlePayment}
-                disabled={paypalLoading}
-                style={{
-                  width: '100%',
-                  background: paypalLoading ? '#6b7280' : '#0070ba',
-                  color: 'white',
-                  padding: '1rem 2rem',
-                  border: 'none',
-                  borderRadius: '12px',
-                  fontSize: '1.1rem',
-                  fontWeight: '600',
-                  cursor: paypalLoading ? 'not-allowed' : 'pointer',
-                  opacity: paypalLoading ? 0.7 : 1,
-                  transition: 'all 0.3s ease',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.5rem'
-                }}
-              >
-                {paypalLoading ? (
-                  <>
-                    <div className="spinner"></div>
-                    Redirecting to PayPal...
-                  </>
-                ) : (
-                  <>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M7.5 14.5c-.5 1.5-1 3.5-1 4.5h4c0-1.5.5-3.5 1-4.5-1.5-.5-3-1-4-1z"/>
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                    </svg>
-                    Pay with PayPal - ${packageInfo.price}
-                  </>
-                )}
-              </button>
-
-              <p style={{
-                color: '#6b7280',
-                fontSize: '0.875rem',
-                marginTop: '1rem'
-              }}>
-                You'll be redirected to PayPal to complete your payment
-              </p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
-      <style jsx>{`
+      {/* ANIMATIONS */}
+      <style jsx global>{`
+        @keyframes fastSmoke {
+          0% {
+            transform: translate(-30%, -10%) rotate(-20deg) scaleX(0.8) scaleY(1.2);
+          }
+          25% {
+            transform: translate(10%, 15%) rotate(10deg) scaleX(1.3) scaleY(0.9);
+          }
+          50% {
+            transform: translate(40%, -5%) rotate(-15deg) scaleX(0.9) scaleY(1.4);
+          }
+          75% {
+            transform: translate(5%, 20%) rotate(25deg) scaleX(1.5) scaleY(0.7);
+          }
+          100% {
+            transform: translate(-30%, -10%) rotate(-20deg) scaleX(0.8) scaleY(1.2);
+          }
+        }
+
+        @keyframes fastSmoke2 {
+          0% {
+            transform: translate(20%, 10%) rotate(15deg) scaleX(1.2) scaleY(0.8);
+          }
+          33% {
+            transform: translate(-15%, -20%) rotate(-25deg) scaleX(0.7) scaleY(1.5);
+          }
+          66% {
+            transform: translate(30%, 5%) rotate(20deg) scaleX(1.4) scaleY(0.9);
+          }
+          100% {
+            transform: translate(20%, 10%) rotate(15deg) scaleX(1.2) scaleY(0.8);
+          }
+        }
+
         .spinner {
-          border: 2px solid #f3f3f3;
-          border-top: 2px solid #3498db;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-top: 2px solid #ffffff;
           border-radius: 50%;
-          width: 20px;
-          height: 20px;
+          width: 16px;
+          height: 16px;
           animation: spin 1s linear infinite;
         }
+
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
+        }
+
+        /* Fix dropdown styling for all browsers */
+        select option {
+          background: #000000 !important;
+          color: white !important;
+        }
+
+        select:focus {
+          outline: none;
         }
       `}</style>
     </div>
