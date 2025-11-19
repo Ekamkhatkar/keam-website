@@ -285,7 +285,7 @@ export default function Home() {
           flexWrap: 'wrap',
           justifyContent: 'center'
         }}>
-          <a href="/work" style={{
+          <a href="/prices" style={{
             background: 'transparent',
             border: '1px solid rgba(255, 255, 255, 0.3)',
             color: '#ffffff',
@@ -309,7 +309,7 @@ export default function Home() {
             Get Started Now
           </a>
           
-          <a href="/prices" style={{
+          <a href="/work" style={{
             background: 'transparent',
             border: '1px solid rgba(255, 255, 255, 0.3)',
             color: '#ffffff',
