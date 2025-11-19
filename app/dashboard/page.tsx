@@ -534,7 +534,7 @@ export default function Dashboard() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
-                        router.push(`/orders/${order.id}`)
+                        router.push(`/dashboard/orders/${order.id}`)
                       }}
                       style={{
                         background: 'transparent',
