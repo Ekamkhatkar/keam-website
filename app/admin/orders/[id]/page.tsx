@@ -199,34 +199,26 @@ export default function AdminOrderDetail() {
   }
 
   async function deleteOrder() {
-    try {
-      // First delete all messages for this order
-      const { error: messagesError } = await supabase
-        .from('messages')
-        .delete()
-        .eq('order_id', orderId)
+  try {
+    const { error: deleteError } = await supabase
+      .from('keam_visuals')
+      .delete()
+      .eq('id', orderId)
 
-      if (messagesError) {
-        console.error('Error deleting messages:', messagesError)
-        // Continue with order deletion even if messages fail
-      }
+    if (deleteError) throw deleteError
 
-      // Then delete the order
-      const { error: orderError } = await supabase
-        .from('keam_visuals')
-        .delete()
-        .eq('id', orderId)
-
-      if (orderError) throw orderError
-      
-      alert('✅ Order deleted successfully')
-      router.push('/admin/dashboard')
-      
-    } catch (error: any) {
-      console.error('Error deleting order:', error)
-      alert('❌ Failed to delete order: ' + (error.message || 'Unknown error'))
-    }
+    // Add delay and force refresh
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    alert('✅ Order deleted successfully')
+    router.refresh() // Force Next.js refresh
+    router.push('/admin/dashboard')
+    
+  } catch (error: any) {
+    console.error('Delete error:', error)
+    alert('Delete failed: ' + error.message)
   }
+}
 
   async function updateOrderNotes() {
     try {
