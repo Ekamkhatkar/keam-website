@@ -136,7 +136,7 @@ function PaymentSuccessContent() {
               marginBottom: '2rem'
             }}>
               We've received your order and will start working on it shortly. 
-              You'll be able to track progress and communicate with our designers through your dashboard.
+              You'll be able to track progress and communicate with Keam through your dashboard.
             </p>
 
             <div style={{
@@ -180,12 +180,12 @@ function PaymentSuccessContent() {
                   gap: '0.5rem'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.background = 'rgba(139, 92, 246, 0.3)'
-                  e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)'
+                  e.currentTarget.style.background = 'rgba(233, 233, 233, 0.3)'
+                  e.currentTarget.style.borderColor = 'rgba(208, 207, 211, 0.5)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.background = 'rgba(139, 92, 246, 0.2)'
-                  e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)'
+                  e.currentTarget.style.background = 'rgba(218, 218, 218, 0.17)'
+                  e.currentTarget.style.borderColor = 'rgba(235, 235, 235, 0.3)'
                 }}
               >
                 💬 Go to Order Chat
@@ -331,7 +331,7 @@ function PaymentSuccessContent() {
                     Communication
                   </p>
                   <p style={{ color: 'rgba(255, 255, 255, 0.6)', margin: 0, fontSize: '0.9rem' }}>
-                    Chat with our designers directly through your order page
+                    Chat with Keam directly through your order page
                   </p>
                 </div>
               </div>
