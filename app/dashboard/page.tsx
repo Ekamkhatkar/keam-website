@@ -427,7 +427,7 @@ export default function Dashboard() {
                     transition: 'all 0.4s ease',
                     cursor: 'pointer'
                   }}
-                  onClick={() => router.push(`/orders/${order.id}`)}
+                  onClick={() => router.push(`/dashboard/orders/${order.id}`)}
                   onMouseOver={(e) => {
                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)'
                     e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'
