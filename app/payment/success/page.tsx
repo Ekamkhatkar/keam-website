@@ -149,9 +149,9 @@ function PaymentSuccessContent() {
               <button
                 onClick={goToOrderChat}
                 style={{
-                  background: 'rgba(139, 92, 246, 0.2)',
-                  border: '1px solid rgba(139, 92, 246, 0.3)',
-                  color: '#8b5cf6',
+                  background: 'rgba(245, 245, 245, 0.2)',
+                  border: '1px solid rgba(175, 175, 175, 0.3)',
+                  color: '#b9b9b9ff',
                   padding: '0.875rem 2rem',
                   borderRadius: '10px',
                   fontSize: '0.95rem',
@@ -163,12 +163,12 @@ function PaymentSuccessContent() {
                   gap: '0.5rem'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.background = 'rgba(139, 92, 246, 0.3)'
-                  e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)'
+                  e.currentTarget.style.background = 'rgba(199, 199, 199, 0.3)'
+                  e.currentTarget.style.borderColor = 'rgba(116, 116, 116, 0.5)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.background = 'rgba(139, 92, 246, 0.2)'
-                  e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)'
+                  e.currentTarget.style.background = 'rgba(138, 138, 138, 0.2)'
+                  e.currentTarget.style.borderColor = 'rgba(146, 146, 146, 0.3)'
                 }}
               >
                 💬 Go to Order Chat
