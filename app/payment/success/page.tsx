@@ -136,25 +136,8 @@ function PaymentSuccessContent() {
               marginBottom: '2rem'
             }}>
               We've received your order and will start working on it shortly. 
-              You'll be able to track progress and communicate with Keam through your dashboard.
+              You'll be able to track progress and communicate with our designers through your dashboard.
             </p>
-
-            <div style={{
-              background: 'rgba(34, 197, 94, 0.1)',
-              border: '1px solid rgba(34, 197, 94, 0.2)',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              marginBottom: '2rem'
-            }}>
-              <p style={{
-                color: '#22c55e',
-                fontSize: '0.9rem',
-                fontWeight: '500',
-                margin: 0
-              }}>
-                ✅ You will receive a confirmation email shortly
-              </p>
-            </div>
 
             <div style={{
               display: 'flex',
@@ -180,12 +163,12 @@ function PaymentSuccessContent() {
                   gap: '0.5rem'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.background = 'rgba(233, 233, 233, 0.3)'
-                  e.currentTarget.style.borderColor = 'rgba(208, 207, 211, 0.5)'
+                  e.currentTarget.style.background = 'rgba(139, 92, 246, 0.3)'
+                  e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.background = 'rgba(218, 218, 218, 0.17)'
-                  e.currentTarget.style.borderColor = 'rgba(235, 235, 235, 0.3)'
+                  e.currentTarget.style.background = 'rgba(139, 92, 246, 0.2)'
+                  e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)'
                 }}
               >
                 💬 Go to Order Chat
@@ -331,34 +314,11 @@ function PaymentSuccessContent() {
                     Communication
                   </p>
                   <p style={{ color: 'rgba(255, 255, 255, 0.6)', margin: 0, fontSize: '0.9rem' }}>
-                    Chat with Keam directly through your order page
+                    Chat with our designers directly through your order page
                   </p>
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Help Text */}
-          <div style={{
-            color: 'rgba(255, 255, 255, 0.4)',
-            fontSize: '0.875rem',
-            lineHeight: '1.6',
-            marginTop: '2rem'
-          }}>
-            <p>
-              Questions? Contact us at{' '}
-              <a 
-                href="mailto:support@keamvisuals.com"
-                style={{
-                  color: 'rgba(255, 255, 255, 0.6)',
-                  textDecoration: 'none'
-                }}
-                onMouseOver={(e) => e.currentTarget.style.textDecoration = 'underline'}
-                onMouseOut={(e) => e.currentTarget.style.textDecoration = 'none'}
-              >
-                support@keamvisuals.com
-              </a>
-            </p>
           </div>
         </div>
       </div>
