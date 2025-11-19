@@ -1,9 +1,30 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function PaymentSuccess() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const [orderId, setOrderId] = useState<string>('')
+
+  useEffect(() => {
+    // Get order ID from URL params if available
+    const orderIdFromParams = searchParams.get('orderId')
+    if (orderIdFromParams) {
+      setOrderId(orderIdFromParams)
+    }
+  }, [searchParams])
+
+  const goToOrderChat = () => {
+    if (orderId) {
+      // Go to specific order chat
+      router.push(`/dashboard/orders/${orderId}`)
+    } else {
+      // Go to dashboard to see all orders
+      router.push('/dashboard')
+    }
+  }
 
   return (
     <div style={{
@@ -157,6 +178,35 @@ export default function PaymentSuccess() {
               justifyContent: 'center',
               flexWrap: 'wrap'
             }}>
+              {/* CHAT BUTTON - NEW */}
+              <button
+                onClick={goToOrderChat}
+                style={{
+                  background: 'rgba(139, 92, 246, 0.2)',
+                  border: '1px solid rgba(139, 92, 246, 0.3)',
+                  color: '#8b5cf6',
+                  padding: '0.875rem 2rem',
+                  borderRadius: '10px',
+                  fontSize: '0.95rem',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = 'rgba(139, 92, 246, 0.3)'
+                  e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)'
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'rgba(139, 92, 246, 0.2)'
+                  e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)'
+                }}
+              >
+                💬 Go to Order Chat
+              </button>
+              
               <button
                 onClick={() => router.push('/dashboard')}
                 style={{
@@ -297,7 +347,7 @@ export default function PaymentSuccess() {
                     Communication
                   </p>
                   <p style={{ color: 'rgba(255, 255, 255, 0.6)', margin: 0, fontSize: '0.9rem' }}>
-                    Chat with our designers directly through your order page
+                    Chat with our Keam directly through your order page
                   </p>
                 </div>
               </div>
