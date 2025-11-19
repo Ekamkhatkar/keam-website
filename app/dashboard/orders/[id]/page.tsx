@@ -19,6 +19,31 @@ export default function OrderDetail() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  // 🔒 SECURITY CHECK - Make sure user owns this order
+  useEffect(() => {
+    async function checkAccess() {
+      if (!user) {
+        router.push('/login')
+        return
+      }
+
+      const { data } = await supabase
+        .from('keam_visuals')
+        .select('user_id')
+        .eq('id', orderId)
+        .single()
+
+      // If order doesn't belong to this user, kick them out
+      if (data && data.user_id !== user.id) {
+        alert('Access denied: This is not your order')
+        router.push('/dashboard')
+        return
+      }
+    }
+
+    checkAccess()
+  }, [user, orderId, router])
+
   // Auto-scroll to bottom when messages change
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -69,6 +94,7 @@ export default function OrderDetail() {
       .from('keam_visuals')
       .select('*')
       .eq('id', orderId)
+      .eq('user_id', user?.id) // Double-check: only get order if it belongs to user
       .single()
 
     if (data) setOrder(data)
