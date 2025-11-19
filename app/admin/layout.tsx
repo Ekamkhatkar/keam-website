@@ -1,12 +1,22 @@
-// app/admin/layout.tsx
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <div style={{ background: '#000000', color: 'white', minHeight: '100vh' }}>
-      {children}
-    </div>
-  )
+  const router = useRouter()
+
+  useEffect(() => {
+    // Check if admin is logged in
+    const isAdmin = localStorage.getItem('adminAuthenticated')
+    if (!isAdmin) {
+      router.push('/admin/login')
+    }
+  }, [router])
+
+  return <>{children}</>
 }
