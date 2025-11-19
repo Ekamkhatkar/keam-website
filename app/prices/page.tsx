@@ -1,136 +1,51 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { useAuth } from '@/contexts/AuthContext'
-import { supabase } from '@/lib/supabase'
+import { useState } from 'react'
+import { useAuth } from '../../contexts/AuthContext'
+import { signOut } from '../../lib/auth-client'
 
-const packages = {
-  'discord-package': { name: 'Discord Package', price: 20 },
-  'fivem-package': { name: 'FiveM Package', price: 30 },
-  'abstract-package': { name: 'Abstract Package', price: 25 },
-  'brand-identity': { name: 'Brand Identity', price: 120 },
-  'twitter-header': { name: 'Twitter Header', price: 15 },
-  'thumbnail': { name: 'Thumbnail', price: 10 }
-}
-
-export default function OrderForm() {
-  const params = useParams()
-  const router = useRouter()
+export default function Prices() {
   const { user } = useAuth()
-  const packageType = params.package as string
-  const packageInfo = packages[packageType as keyof typeof packages]
+  const [isOpen, setIsOpen] = useState(false)
   
-  const [formData, setFormData] = useState({
-    designStyle: '',
-    colorPreferences: '',
-    specificRequirements: '',
-    references: '',
-    deadline: ''
-  })
-  const [loading, setLoading] = useState(false)
-  const [orderCreated, setOrderCreated] = useState(false)
-  const [currentOrderId, setCurrentOrderId] = useState<string>('')
-  const [paypalLoading, setPaypalLoading] = useState(false)
-
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID}&currency=USD`
-    script.async = true
-    document.body.appendChild(script)
-
-    return () => {
-      document.body.removeChild(script)
-    }
-  }, [])
-
-  if (!packageInfo) {
-    router.push('/prices')
-    return null
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!user) {
-      alert('Please log in to place an order')
-      router.push('/login')
-      return
-    }
-
-    setLoading(true)
-
-    try {
-      const { data: order, error } = await supabase
-        .from('keam_visuals')
-        .insert([{
-          user_id: user.id,
-          package_type: packageInfo.name,
-          price: packageInfo.price,
-          design_brief: formData,
-          status: 'pending',
-          payment_status: 'unpaid'
-        }])
-        .select()
-        .single()
-
-      if (error) throw error
-
-      setCurrentOrderId(order.id)
-      setOrderCreated(true)
-
-    } catch (error: any) {
-      alert('Error creating order: ' + (error.message || 'Unknown error'))
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handlePayment = async () => {
-    if (!currentOrderId) {
-      alert('No order created yet')
-      return
-    }
-
-    setPaypalLoading(true)
-    
-    try {
-      const response = await fetch('/api/paypal/create-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          orderId: currentOrderId,
-          amount: packageInfo.price,
-          packageName: packageInfo.name
-        }),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create PayPal order')
-      }
-
-      if (data.approval_url) {
-        window.location.href = data.approval_url
-      } else {
-        throw new Error('No PayPal approval URL received')
-      }
-    } catch (error: any) {
-      alert('Payment setup failed: ' + error.message)
-    } finally {
-      setPaypalLoading(false)
-    }
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
+  const packages = [
+    { 
+      name: 'Discord Package', 
+      price: 20, 
+      features: ['Discord Banner', 'Discord PFP', 'Discord Invite Banner', 'Discord Profile Header', '24-72hr Delivery'],
+      popular: false
+    },
+    { 
+      name: 'FiveM Package', 
+      price: 30, 
+      features: ['FiveM Connecting Banner', 'FiveM Icon', 'Watermark', 'Everything in the Discord Package', '24-72hr Delivery'],
+      popular: true
+    },
+    { 
+      name: 'Abstract Package', 
+      price: 25, 
+      features: ['Discord Banner', 'Discord PFP', 'Watermark', 'Discord Invite Banner', 'Header', '24-72hr Delivery'],
+      popular: false
+    },
+    { 
+      name: 'Brand Identity', 
+      price: 120, 
+      features: ['Logo Design', 'Color Palette', 'Social Kit', 'Style Guide', 'Unlimited Revisions'],
+      popular: false
+    },
+    { 
+      name: 'Twitter Header', 
+      price: 15, 
+      features: ['A unique header', '1500x500 or 3000x1000', 'Customizable Styles', 'Unique Aesthetic', '24-72hr Delivery'],
+      popular: false
+    },
+    { 
+      name: 'Thumbnail', 
+      price: 10, 
+      features: ['Bold Titles & Vibrant Colors', 'Perfect Composition & Lighting', 'Made for Engagement', 'Unique Concepts for Every Video', '24-72hr Delivery'],
+      popular: false
+    },
+  ]
 
   return (
     <div style={{
@@ -141,8 +56,7 @@ export default function OrderForm() {
       overflow: 'hidden',
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      
-      {/* BACKGROUND SMOKE EFFECTS */}
+      {/* SINGLE FAST WARPING SMOKE STRIPE */}
       <div style={{
         position: 'absolute',
         top: 0,
@@ -152,6 +66,7 @@ export default function OrderForm() {
         overflow: 'hidden',
         background: '#000000'
       }}>
+        {/* Main fast-moving smoke stripe */}
         <div style={{
           position: 'absolute',
           top: '-20%',
@@ -164,9 +79,11 @@ export default function OrderForm() {
           `,
           filter: 'blur(80px)',
           animation: 'fastSmoke 8s ease-in-out infinite',
-          transformOrigin: 'center center'
+          transformOrigin: 'center center',
+          willChange: 'transform'
         }} />
         
+        {/* Secondary flowing element for depth */}
         <div style={{
           position: 'absolute',
           bottom: '-10%',
@@ -176,388 +93,418 @@ export default function OrderForm() {
           background: 'radial-gradient(ellipse 700px 350px at 50% 50%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 30%, transparent 60%)',
           filter: 'blur(90px)',
           animation: 'fastSmoke2 10s ease-in-out infinite',
-          transformOrigin: 'center center'
+          transformOrigin: 'center center',
+          willChange: 'transform'
+        }} />
+        
+        {/* Subtle ambient glow */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: '100%',
+          height: '100%',
+          background: 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%)',
+          filter: 'blur(120px)',
+          transform: 'translate(-50%, -50%)',
+          animation: 'subtleGlow 12s ease-in-out infinite'
         }} />
       </div>
 
-      {/* MAIN CONTENT */}
-      <div style={{ position: 'relative', zIndex: 100, paddingTop: '100px' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 2rem' }}>
+      {/* MINIMAL HEADER */}
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        padding: '2rem 3rem',
+        zIndex: 1000,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        {/* Logo */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          fontSize: '1.1rem',
+          fontWeight: '500',
+          color: '#ffffff'
+        }}>
+          <div style={{
+            width: '24px',
+            height: '24px',
+            background: '#ffffff',
+            borderRadius: '4px'
+          }} />
+          Keam Visuals
+        </div>
+        
+        {/* Nav */}
+        <nav style={{
+          display: 'flex',
+          gap: '2.5rem',
+          alignItems: 'center'
+        }}>
+          {['Home', 'Work', 'Prices'].map((item, idx) => (
+            <a key={idx} href={item === 'Home' ? '/' : item === 'Work' ? '/work' : item === 'Prices' ? '/prices' : '#'} style={{
+              color: item === 'Prices' ? '#ffffff' : 'rgba(255, 255, 255, 0.7)',
+              textDecoration: 'none',
+              fontSize: '0.95rem',
+              fontWeight: '400',
+              transition: 'color 0.3s ease',
+              ...(item === 'Prices' && {
+                background: 'rgba(255, 255, 255, 0.1)',
+                padding: '0.5rem 1rem',
+                borderRadius: '8px'
+              })
+            }}
+            onMouseOver={(e) => e.currentTarget.style.color = '#ffffff'}
+            onMouseOut={(e) => e.currentTarget.style.color = item === 'Prices' ? '#ffffff' : 'rgba(255, 255, 255, 0.7)'}
+            >
+              {item}
+            </a>
+          ))}
           
-          {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '50px',
-              padding: '0.5rem 1.25rem',
-              marginBottom: '1.5rem',
-              fontSize: '0.875rem',
-              color: 'rgba(255, 255, 255, 0.8)',
-              fontWeight: '400'
-            }}>
-              <div style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                background: '#ffffff'
-              }} />
-              Order Form
-            </div>
+          {user ? (
+            <div style={{position: 'relative'}}>
+              <button 
+                onClick={() => setIsOpen(!isOpen)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '8px',
+                  padding: '0.5rem 1rem',
+                  color: 'white',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: '400'
+                }}
+              >
+                {user.email?.split('@')[0]}
+              </button>
 
+              {isOpen && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  right: 0,
+                  marginTop: '10px',
+                  background: '#0a0a0a',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '12px',
+                  padding: '0.5rem',
+                  minWidth: '180px',
+                  zIndex: 1000
+                }}>
+                  <a href="/dashboard" style={{
+                    display: 'block',
+                    padding: '0.75rem 1rem',
+                    color: 'white',
+                    textDecoration: 'none',
+                    borderRadius: '8px',
+                    fontSize: '0.9rem',
+                    transition: 'background 0.2s'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
+                  onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                  >
+                    Dashboard
+                  </a>
+                  <button
+                    onClick={() => {
+                      signOut()
+                      setIsOpen(false)
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem 1rem',
+                      background: 'transparent',
+                      border: 'none',
+                      color: 'white',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      borderRadius: '8px',
+                      fontSize: '0.9rem',
+                      transition: 'background 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
+                    onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <a href="/login" style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: '8px',
+              padding: '0.5rem 1.25rem',
+              color: 'white',
+              textDecoration: 'none',
+              fontSize: '0.9rem',
+              fontWeight: '400',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+            }}
+            >
+              Login
+            </a>
+          )}
+        </nav>
+      </header>
+
+      {/* PRICING SECTION */}
+      <section style={{
+        padding: '8rem 3rem',
+        position: 'relative'
+      }}>
+        <div style={{maxWidth: '1400px', margin: '0 auto'}}>
+          {/* Section header */}
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '5rem'
+          }}>
             <h1 style={{
-              fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
               fontWeight: '300',
-              marginBottom: '0.5rem',
+              marginBottom: '1.5rem',
               letterSpacing: '-0.02em'
             }}>
-              {packageInfo.name}
+              Pricing & Packages
             </h1>
             <p style={{
-              fontSize: '1.5rem',
-              color: 'rgba(255, 255, 255, 0.6)',
+              fontSize: '1.125rem',
+              color: 'rgba(255, 255, 255, 0.5)',
               fontWeight: '400'
             }}>
-              ${packageInfo.price}
+              Choose the perfect package for your streaming or content creation needs
             </p>
           </div>
+          
+          {/* Pricing Grid */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+            gap: '2rem',
+            marginBottom: '6rem'
+          }}>
+            {packages.map((pkg, index) => (
+              <div key={index} style={{
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: pkg.popular ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '16px',
+                padding: '2.5rem 2rem',
+                position: 'relative',
+                transition: 'all 0.4s ease',
+                ...(pkg.popular && {
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  transform: 'scale(1.02)'
+                })
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)'
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                e.currentTarget.style.transform = 'translateY(-4px)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = pkg.popular ? 'rgba(255, 255, 255, 0.04)' : 'rgba(255, 255, 255, 0.02)'
+                e.currentTarget.style.borderColor = pkg.popular ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0.08)'
+                e.currentTarget.style.transform = pkg.popular ? 'scale(1.02)' : 'translateY(0)'
+              }}
+              >
+                {pkg.popular && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '-12px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ffffff',
+                    padding: '0.5rem 1.5rem',
+                    borderRadius: '20px',
+                    fontSize: '0.8rem',
+                    fontWeight: '500',
+                    backdropFilter: 'blur(10px)'
+                  }}>
+                    Most Popular
+                  </div>
+                )}
+                
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '400',
+                  marginBottom: '1rem',
+                  color: '#ffffff',
+                  textAlign: 'center',
+                  letterSpacing: '-0.01em'
+                }}>
+                  {pkg.name}
+                </h3>
+                
+                <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+                  <span style={{
+                    fontSize: '3rem',
+                    fontWeight: '300',
+                    color: '#ffffff'
+                  }}>
+                    ${pkg.price}
+                  </span>
+                  <span style={{
+                    color: 'rgba(255, 255, 255, 0.5)',
+                    marginLeft: '0.5rem',
+                    fontSize: '1rem'
+                  }}>
+                    /project
+                  </span>
+                </div>
+                
+                <ul style={{
+                  listStyle: 'none',
+                  marginBottom: '2.5rem',
+                  padding: 0
+                }}>
+                  {pkg.features.map((feature, idx) => (
+                    <li key={idx} style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      padding: '0.75rem 0',
+                      borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                      fontSize: '0.95rem',
+                      fontWeight: '300',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem'
+                    }}>
+                      <span style={{
+                        color: 'rgba(255, 255, 255, 0.9)',
+                        fontSize: '1.1rem'
+                      }}>✓</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                
+                <a 
+                  href={`/order/${pkg.name.toLowerCase().replace(/ /g, '-')}`}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    background: pkg.popular 
+                      ? 'rgba(255, 255, 255, 0.15)' 
+                      : 'rgba(255, 255, 255, 0.05)',
+                    color: '#ffffff',
+                    padding: '1rem 1.5rem',
+                    borderRadius: '10px',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    fontWeight: '400',
+                    border: pkg.popular ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid rgba(255, 255, 255, 0.1)',
+                    transition: 'all 0.3s ease',
+                    fontSize: '0.95rem'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)'
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = pkg.popular 
+                      ? 'rgba(255, 255, 255, 0.15)' 
+                      : 'rgba(255, 255, 255, 0.05)'
+                    e.currentTarget.style.borderColor = pkg.popular 
+                      ? '1px solid rgba(255, 255, 255, 0.3)' 
+                      : '1px solid rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
+                >
+                  Select Package
+                </a>
+              </div>
+            ))}
+          </div>
 
-          {/* Order Form */}
+          {/* Custom Quote Section */}
           <div style={{
             background: 'rgba(255, 255, 255, 0.02)',
             border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '20px',
-            padding: '3rem',
-            backdropFilter: 'blur(10px)'
+            borderRadius: '16px',
+            padding: '4rem 3rem',
+            textAlign: 'center',
+            maxWidth: '600px',
+            margin: '0 auto'
           }}>
-            {!orderCreated ? (
-              <form onSubmit={handleSubmit}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                  
-                  {/* Design Style - FIXED DROPDOWN */}
-                  <div>
-                    <label style={{
-                      display: 'block',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      marginBottom: '0.75rem',
-                      fontSize: '0.9rem',
-                      fontWeight: '400'
-                    }}>
-                      Design Style *
-                    </label>
-                    <select
-                      name="designStyle"
-                      value={formData.designStyle}
-                      onChange={handleInputChange}
-                      required
-                      style={{
-                        width: '100%',
-                        padding: '0.875rem 1rem',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        borderRadius: '10px',
-                        color: 'white',
-                        fontSize: '0.95rem',
-                        transition: 'all 0.3s ease',
-                        appearance: 'none',
-                        backgroundImage: `url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23ffffff' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>")`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'right 1rem center',
-                        backgroundSize: '12px'
-                      }}
-                      onFocus={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
-                      }}
-                      onBlur={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                      }}
-                    >
-                      <option value="" style={{ background: '#000000', color: 'white' }}>Select a style</option>
-                      <option value="modern" style={{ background: '#000000', color: 'white' }}>Modern & Clean</option>
-                      <option value="vibrant" style={{ background: '#000000', color: 'white' }}>Vibrant & Colorful</option>
-                      <option value="minimal" style={{ background: '#000000', color: 'white' }}>Minimalist</option>
-                      <option value="gaming" style={{ background: '#000000', color: 'white' }}>Gaming Theme</option>
-                      <option value="elegant" style={{ background: '#000000', color: 'white' }}>Elegant & Professional</option>
-                      <option value="custom" style={{ background: '#000000', color: 'white' }}>Custom (describe below)</option>
-                    </select>
-                  </div>
-
-                  {/* Color Preferences */}
-                  <div>
-                    <label style={{
-                      display: 'block',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      marginBottom: '0.75rem',
-                      fontSize: '0.9rem',
-                      fontWeight: '400'
-                    }}>
-                      Color Preferences
-                    </label>
-                    <input
-                      type="text"
-                      name="colorPreferences"
-                      value={formData.colorPreferences}
-                      onChange={handleInputChange}
-                      placeholder="e.g., Blue and purple, brand colors, etc."
-                      style={{
-                        width: '100%',
-                        padding: '0.875rem 1rem',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        borderRadius: '10px',
-                        color: 'white',
-                        fontSize: '0.95rem',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onFocus={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
-                      }}
-                      onBlur={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                      }}
-                    />
-                  </div>
-
-                  {/* Specific Requirements */}
-                  <div>
-                    <label style={{
-                      display: 'block',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      marginBottom: '0.75rem',
-                      fontSize: '0.9rem',
-                      fontWeight: '400'
-                    }}>
-                      Specific Requirements *
-                    </label>
-                    <textarea
-                      name="specificRequirements"
-                      value={formData.specificRequirements}
-                      onChange={handleInputChange}
-                      required
-                      rows={4}
-                      placeholder="Describe exactly what you need..."
-                      style={{
-                        width: '100%',
-                        padding: '0.875rem 1rem',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        borderRadius: '10px',
-                        color: 'white',
-                        fontSize: '0.95rem',
-                        resize: 'vertical',
-                        transition: 'all 0.3s ease',
-                        fontFamily: 'inherit'
-                      }}
-                      onFocus={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
-                      }}
-                      onBlur={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                      }}
-                    />
-                  </div>
-
-                  {/* References */}
-                  <div>
-                    <label style={{
-                      display: 'block',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      marginBottom: '0.75rem',
-                      fontSize: '0.9rem',
-                      fontWeight: '400'
-                    }}>
-                      Reference Links/Images
-                    </label>
-                    <textarea
-                      name="references"
-                      value={formData.references}
-                      onChange={handleInputChange}
-                      rows={3}
-                      placeholder="Paste links to designs you like..."
-                      style={{
-                        width: '100%',
-                        padding: '0.875rem 1rem',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        borderRadius: '10px',
-                        color: 'white',
-                        fontSize: '0.95rem',
-                        resize: 'vertical',
-                        transition: 'all 0.3s ease',
-                        fontFamily: 'inherit'
-                      }}
-                      onFocus={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
-                      }}
-                      onBlur={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                      }}
-                    />
-                  </div>
-
-                  {/* Deadline */}
-                  <div>
-                    <label style={{
-                      display: 'block',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      marginBottom: '0.75rem',
-                      fontSize: '0.9rem',
-                      fontWeight: '400'
-                    }}>
-                      Desired Deadline
-                    </label>
-                    <input
-                      type="date"
-                      name="deadline"
-                      value={formData.deadline}
-                      onChange={handleInputChange}
-                      style={{
-                        width: '100%',
-                        padding: '0.875rem 1rem',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        borderRadius: '10px',
-                        color: 'white',
-                        fontSize: '0.95rem',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onFocus={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.08)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
-                      }}
-                      onBlur={(e) => {
-                        e.target.style.background = 'rgba(255, 255, 255, 0.05)'
-                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                      }}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    style={{
-                      width: '100%',
-                      background: 'transparent',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      color: '#ffffff',
-                      padding: '0.875rem 2rem',
-                      borderRadius: '10px',
-                      fontSize: '0.95rem',
-                      fontWeight: '400',
-                      cursor: loading ? 'not-allowed' : 'pointer',
-                      opacity: loading ? 0.6 : 1,
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseOver={(e) => {
-                      if (!loading) {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
-                      }
-                    }}
-                    onMouseOut={(e) => {
-                      if (!loading) {
-                        e.currentTarget.style.background = 'transparent'
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                      }
-                    }}
-                  >
-                    {loading ? 'Creating Order...' : `Continue to Payment - $${packageInfo.price}`}
-                  </button>
-                </div>
-              </form>
-            ) : (
-              <div style={{ textAlign: 'center' }}>
-                <div style={{
-                  background: 'rgba(34, 197, 94, 0.1)',
-                  border: '1px solid rgba(34, 197, 94, 0.2)',
-                  borderRadius: '16px',
-                  padding: '2rem',
-                  marginBottom: '2rem'
-                }}>
-                  <h3 style={{
-                    color: 'white',
-                    fontSize: '1.5rem',
-                    fontWeight: '400',
-                    marginBottom: '1rem'
-                  }}>
-                    Order Created Successfully!
-                  </h3>
-                  <p style={{ color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
-                    Order ID: {currentOrderId}
-                  </p>
-                  <p style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                    Complete your payment to start your project
-                  </p>
-                </div>
-
-                <button
-                  onClick={handlePayment}
-                  disabled={paypalLoading}
-                  style={{
-                    width: '100%',
-                    background: 'transparent',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    color: '#ffffff',
-                    padding: '0.875rem 2rem',
-                    borderRadius: '10px',
-                    fontSize: '0.95rem',
-                    fontWeight: '400',
-                    cursor: paypalLoading ? 'not-allowed' : 'pointer',
-                    opacity: paypalLoading ? 0.6 : 1,
-                    transition: 'all 0.3s ease',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem'
-                  }}
-                  onMouseOver={(e) => {
-                    if (!paypalLoading) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
-                    }
-                  }}
-                  onMouseOut={(e) => {
-                    if (!paypalLoading) {
-                      e.currentTarget.style.background = 'transparent'
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                    }
-                  }}
-                >
-                  {paypalLoading ? (
-                    <>
-                      <div className="spinner"></div>
-                      Redirecting to PayPal...
-                    </>
-                  ) : (
-                    <>
-                      Pay with PayPal - ${packageInfo.price}
-                    </>
-                  )}
-                </button>
-
-                <p style={{
-                  color: 'rgba(255, 255, 255, 0.4)',
-                  fontSize: '0.875rem',
-                  marginTop: '1rem'
-                }}>
-                  You'll be redirected to PayPal to complete your payment
-                </p>
-              </div>
-            )}
+            <h2 style={{
+              fontSize: '2rem',
+              fontWeight: '300',
+              marginBottom: '1rem',
+              color: '#ffffff',
+              letterSpacing: '-0.01em'
+            }}>
+              Need Something Custom?
+            </h2>
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.5)',
+              marginBottom: '2.5rem',
+              fontSize: '1.125rem',
+              fontWeight: '300',
+              lineHeight: '1.6'
+            }}>
+              Contact me for a custom quote tailored to your specific needs and requirements
+            </p>
+            <a 
+              href="mailto:support@keamvisuals.com" 
+              style={{
+                display: 'inline-block',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: '#ffffff',
+                padding: '1rem 2rem',
+                borderRadius: '10px',
+                textDecoration: 'none',
+                fontWeight: '400',
+                transition: 'all 0.3s ease',
+                fontSize: '1rem'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
+            >
+              Get Custom Quote
+            </a>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* MINIMAL FOOTER */}
+      <footer style={{
+        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+        padding: '3rem',
+        textAlign: 'center'
+      }}>
+        <p style={{
+          color: 'rgba(255, 255, 255, 0.3)',
+          fontSize: '0.875rem',
+          fontWeight: '300'
+        }}>
+          © 2025 Keam Visuals. All rights reserved.
+        </p>
+      </footer>
 
       {/* ANIMATIONS */}
       <style jsx global>{`
@@ -594,28 +541,41 @@ export default function OrderForm() {
           }
         }
 
-        .spinner {
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          border-top: 2px solid #ffffff;
-          border-radius: 50%;
-          width: 16px;
-          height: 16px;
-          animation: spin 1s linear infinite;
+        @keyframes subtleGlow {
+          0%, 100% {
+            opacity: 0.3;
+            transform: translate(-50%, -50%) scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: translate(-50%, -50%) scale(1.2);
+          }
         }
 
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+        html {
+          scroll-behavior: smooth;
         }
 
-        /* Fix dropdown styling for all browsers */
-        select option {
-          background: #000000 !important;
-          color: white !important;
+        ::selection {
+          background: rgba(255, 255, 255, 0.1);
+          color: white;
         }
 
-        select:focus {
-          outline: none;
+        ::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: #000000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.2);
         }
       `}</style>
     </div>
