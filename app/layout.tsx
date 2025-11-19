@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: 'Keam Visuals',
     images: [
       {
-        url: 'https://i.imgur.com/FDBOf9y.png',
+        url: 'https://i.imgur.com/HdXpPH8.png',
         width: 1200,
         height: 630,
         alt: 'Keam Visuals - Professional Design Services',
@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Keam Visuals - Professional Design Services',
-    description: '2 years of design experience. Twitch, YouTube, and custom graphics.',
-    images: ['https://i.imgur.com/FDBOf9y.png'],
+    description: '2 years of design experience.',
+    images: ['https://i.imgur.com/HdXpPH8.png'],
   },
   other: {
     'msapplication-TileColor': '#000000',
