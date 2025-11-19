@@ -74,33 +74,36 @@ export default function Home() {
       </div>
 
       {/* MINIMAL HEADER */}
-      <header style={{
-        position: 'fixed',
-        top: 0,
-        width: '100%',
-        padding: '2rem 3rem',
-        zIndex: 1000,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        {/* Logo */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          fontSize: '1.1rem',
-          fontWeight: '500',
-          color: '#ffffff'
-        }}>
-          <div style={{
-            width: '24px',
-            height: '24px',
-            background: '#ffffff',
-            borderRadius: '4px'
-          }} />
-          Keam Visuals
-        </div>
+<header style={{
+  position: 'fixed',
+  top: 0,
+  width: '100%',
+  padding: '2rem 3rem',
+  zIndex: 1000,
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center'
+}}>
+  {/* Logo */}
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    fontSize: '1.1rem',
+    fontWeight: '500',
+    color: '#ffffff'
+  }}>
+    <img 
+      src="https://i.imgur.com/L5xgyCL.png" 
+      alt="KEAM Visuals Logo"
+      style={{
+        width: '35px',
+        height: '35px',
+        objectFit: 'contain'
+      }}
+    />
+    Keam Visuals
+  </div>
         
         {/* Nav */}
         <nav style={{
