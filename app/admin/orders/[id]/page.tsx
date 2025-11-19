@@ -20,7 +20,6 @@ export default function AdminOrderDetail() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [editingOrder, setEditingOrder] = useState(false)
   const [orderNotes, setOrderNotes] = useState('')
-  const [customerInfo, setCustomerInfo] = useState<any>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const messageInputRef = useRef<HTMLInputElement>(null)
@@ -201,18 +200,31 @@ export default function AdminOrderDetail() {
 
   async function deleteOrder() {
     try {
-      const { error } = await supabase
+      // First delete all messages for this order
+      const { error: messagesError } = await supabase
+        .from('messages')
+        .delete()
+        .eq('order_id', orderId)
+
+      if (messagesError) {
+        console.error('Error deleting messages:', messagesError)
+        // Continue with order deletion even if messages fail
+      }
+
+      // Then delete the order
+      const { error: orderError } = await supabase
         .from('keam_visuals')
         .delete()
         .eq('id', orderId)
 
-      if (error) throw error
+      if (orderError) throw orderError
       
-      alert('Order deleted successfully')
+      alert('✅ Order deleted successfully')
       router.push('/admin/dashboard')
-    } catch (error) {
+      
+    } catch (error: any) {
       console.error('Error deleting order:', error)
-      alert('Failed to delete order')
+      alert('❌ Failed to delete order: ' + (error.message || 'Unknown error'))
     }
   }
 
@@ -485,10 +497,18 @@ export default function AdminOrderDetail() {
                   fontWeight: '500',
                   background: order.payment_status === 'paid' 
                     ? 'rgba(34, 197, 94, 0.2)' 
+                    : order.payment_status === 'refunded'
+                    ? 'rgba(245, 158, 11, 0.2)'
                     : 'rgba(239, 68, 68, 0.2)',
-                  color: order.payment_status === 'paid' ? '#22c55e' : '#ef4444',
+                  color: order.payment_status === 'paid' 
+                    ? '#22c55e' 
+                    : order.payment_status === 'refunded'
+                    ? '#f59e0b'
+                    : '#ef4444',
                   border: order.payment_status === 'paid' 
                     ? '1px solid rgba(34, 197, 94, 0.3)' 
+                    : order.payment_status === 'refunded'
+                    ? '1px solid rgba(245, 158, 11, 0.3)'
                     : '1px solid rgba(239, 68, 68, 0.3)'
                 }}>
                   {order.payment_status || 'unpaid'}
@@ -559,6 +579,7 @@ export default function AdminOrderDetail() {
                       <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                         <button onClick={() => updatePaymentStatus('paid')} style={quickActionStyle}>💳 Paid</button>
                         <button onClick={() => updatePaymentStatus('unpaid')} style={quickActionStyle}>❌ Unpaid</button>
+                        <button onClick={() => updatePaymentStatus('refunded')} style={quickActionStyle}>↩️ Refunded</button>
                       </div>
                     </div>
 
