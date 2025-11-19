@@ -7,11 +7,11 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Keam Visuals - Professional Design Services',
-  description: '2 years of design experience. Twitch, YouTube, and custom graphics.',
+  description: '2 years of design experience.',
   themeColor: '#000000',
   openGraph: {
     title: 'Keam Visuals - Professional Design Services',
-    description: '2 years of design experience. Twitch, YouTube, and custom graphics.',
+    description: '2 years of design experience.',
     url: 'https://keamvisuals.com',
     siteName: 'Keam Visuals',
     images: [
