@@ -1,29 +1,13 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Suspense } from 'react'
 
-export default function PaymentSuccess() {
+function PaymentSuccessContent() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const [orderId, setOrderId] = useState<string>('')
-
-  useEffect(() => {
-    // Get order ID from URL params if available
-    const orderIdFromParams = searchParams.get('orderId')
-    if (orderIdFromParams) {
-      setOrderId(orderIdFromParams)
-    }
-  }, [searchParams])
 
   const goToOrderChat = () => {
-    if (orderId) {
-      // Go to specific order chat
-      router.push(`/dashboard/orders/${orderId}`)
-    } else {
-      // Go to dashboard to see all orders
-      router.push('/dashboard')
-    }
+    router.push('/dashboard')
   }
 
   return (
@@ -178,7 +162,7 @@ export default function PaymentSuccess() {
               justifyContent: 'center',
               flexWrap: 'wrap'
             }}>
-              {/* CHAT BUTTON - NEW */}
+              {/* CHAT BUTTON */}
               <button
                 onClick={goToOrderChat}
                 style={{
@@ -347,7 +331,7 @@ export default function PaymentSuccess() {
                     Communication
                   </p>
                   <p style={{ color: 'rgba(255, 255, 255, 0.6)', margin: 0, fontSize: '0.9rem' }}>
-                    Chat with our Keam directly through your order page
+                    Chat with our designers directly through your order page
                   </p>
                 </div>
               </div>
@@ -415,5 +399,25 @@ export default function PaymentSuccess() {
         }
       `}</style>
     </div>
+  )
+}
+
+export default function PaymentSuccess() {
+  return (
+    <Suspense fallback={
+      <div style={{
+        background: '#000000',
+        color: '#ffffff',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'system-ui, -apple-system, sans-serif'
+      }}>
+        Loading...
+      </div>
+    }>
+      <PaymentSuccessContent />
+    </Suspense>
   )
 }
